@@ -133,11 +133,6 @@ public:
         ifstream MovieFile;
         MovieFile.open("C:\\Users\\ASUS\\CLionProjects\\Assessment\\movies.txt", ios::in);
 
-//        while (MovieFile >> movie.title >> movie.description >> movie.genre >> movie.runningTimeInMinutes
-//                        >> movie.mainStar >> movie.distributor >> movie.releaseDate){
-//            localMovies.push_back(movie);
-//        }
-
         while (getline(MovieFile, line)) {
             istringstream iss(line);
             if (iss >> movie.title >> movie.description >> movie.genre >> movie.runningTimeInMinutes
@@ -209,8 +204,61 @@ public:
 
 };
 
-class weeklySchedule {
-    vector<Movie> moviesShown;
+class WeeklySchedule {
+    vector<Movie> movies;
+    vector<string> availableTimes;
+
+public:
+    vector<Movie> getMovies(){
+        Movie movie;
+        movie.updateMoviesFromFile();
+        vector<Movie> localMovies = movie.getMovies();
+        movies = localMovies;
+        return movies;
+    }
+
+    void setMovies() {
+    }
+
+    vector<string> getAvailableTimes() {
+        return availableTimes;
+    }
+
+    void setAvailableTimes(int movieIndex) {
+        vector<string> localTimes;
+        vector<Movie> localMovies = getMovies();
+        Movie movie = localMovies.at(movieIndex);
+
+        int runTime = movie.getRunningTimeInMinutes();
+        int minute = runTime % 60;
+        int hour = (runTime - (runTime % 60)) / 60;
+
+        int startHour = 10;
+        int startMinute = 15;
+        string str = to_string(startHour) + " : " + to_string(startMinute);
+        localTimes.push_back(str);
+
+        while (true){
+            if ((startHour + hour) < 21){
+                if ((startMinute + minute + 25) < 60){
+                    startHour += hour;
+                    startMinute += minute + 25;
+                } else{
+                    startMinute += minute - 60 + 25;
+                    startHour += hour + 1;
+                }
+            } else{
+                break;
+            }
+            string str1 = to_string(startHour) + " : " + to_string(startMinute);
+            localTimes.push_back(str1);
+        }
+
+        availableTimes = localTimes;
+
+     }
+
+
 };
 
 
@@ -285,27 +333,52 @@ public:
         }
         cout << "Choose a number : ";
         getline(cin, str);
-        return stoi(str);
+        return stoi(str) - 1;
     }
 
+    string getBookingTime(int movieIndex){
+        int input;
+        Movie localMovie;
+        localMovie.updateMoviesFromFile();
+        vector<Movie> localMovies = localMovie.getMovies();
+        Movie movie1 = localMovies.at(movieIndex);
+
+        WeeklySchedule schedule;
+        schedule.setAvailableTimes(movieIndex);
+
+        vector<string> localTimes = schedule.getAvailableTimes();
+
+        for (int i = 0; i < localTimes.size(); i ++){
+            cout << i + 1 << ". " << localTimes.at(i) << endl;
+        }
+
+        cout << "Choose an option : ";
+        cin >> input;
+        return localTimes.at(input - 1);
+    }
 };
 
 
 
 int main() {
     Movie movie;
-//    movie.addMovie(movie.getInput());
-//    Movie movie1 = movie.getInput();
-//    movie.addMovie(movie1);
-    movie.updateMoviesFromFile();
-//    Movie movie2 = movie.getMovies().operator[](4);
-//    cout << movie2.getTitle() << endl;
-//    cout << movie.getMovies().size() << endl;
-
-//    movie.displayMovies();
+////    movie.addMovie(movie.getInput());
+////    Movie movie1 = movie.getInput();
+////    movie.addMovie(movie1);
+//    movie.updateMoviesFromFile();
+////    Movie movie2 = movie.getMovies().operator[](4);
+////    cout << movie2.getTitle() << endl;
+////    cout << movie.getMovies().size() << endl;
+//
+////    movie.displayMovies();
     Booking booking;
-    booking.getMovieChoice();
+    int index = booking.getMovieChoice();
 
 //    movie.getMovies().clear();
+
+    WeeklySchedule weeklySchedule;
+    weeklySchedule.setAvailableTimes(index);
+//
+    booking.getBookingTime(index);
     return 0;
 }
