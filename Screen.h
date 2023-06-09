@@ -1,6 +1,3 @@
-//
-// Created by ASUS on 05/06/2023.
-//
 
 #ifndef ASSESSMENT_SCREEN_H
 #define ASSESSMENT_SCREEN_H

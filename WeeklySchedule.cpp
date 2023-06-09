@@ -15,7 +15,6 @@ string* WeeklySchedule::getAvailableTimes() {
 }
 
 void WeeklySchedule::setAvailableTimes(int movieIndex) {
-//    vector<string> localTimes;
     Movie *ptr = getAvailableMovies();
     Movie movie = *(ptr+movieIndex);
 
@@ -48,42 +47,110 @@ void WeeklySchedule::setAvailableTimes(int movieIndex) {
 
 void WeeklySchedule::readFromFile() {
     Movie movie;
-    string line;
+    string line,tempWord, tempTitle, tempDescription, tempGenre, tempMainStar, tempDistributor, tempReleaseDate;
+    int tempRuntime;
     ifstream MovieFile;
-    MovieFile.open("C:\\Users\\ASUS\\CLionProjects\\Assessment\\movies.txt", ios::in);
+    MovieFile.open("movies.txt", ios::in);
 
-    getline(MovieFile, line);
-    movie.setTitle(line);
+//    bool loop = true;
+//    int count = 1;
+//
+//    while (loop){
+//
+//        if (count == 1){
+//            getline(MovieFile, line);
+//            movie.setTitle(line);
+//        }
+//
+//        getline(MovieFile, line);
+//        movie.setDescription(line);
+//
+//        getline(MovieFile, line);
+//        movie.setGenre(line);
+//
+//        getline(MovieFile, line);
+//        movie.setRunningTimeInMinutes(stoi(line));
+//
+//        getline(MovieFile, line);
+//        movie.setMainStar(line);
+//
+//        getline(MovieFile, line);
+//        movie.setDistributor(line);
+//
+//        getline(MovieFile, line);
+//        movie.setReleaseDate(line);
+//
+//        getline(MovieFile, line);
+//
+//        if (line.empty()){
+//            availableMovies.push_back(movie);
+//        }
+//
+//        getline(MovieFile, line);
+//        if (line.empty()){
+//            loop = false;
+//        }
+//        else{
+//            movie.setTitle(line);
+//        }
+//
+//        count ++;
+//
+//    }
 
-    getline(MovieFile, line);
-    movie.setDescription(line);
+    if (MovieFile.is_open()){
+        while (getline(MovieFile, line)){
+            stringstream movieString(line);
+            int counter = 0;
 
-    getline(MovieFile, line);
-    movie.setGenre(line);
+            while (getline(movieString >> ws, tempWord, ',')){
 
-    getline(MovieFile, line);
-    movie.setRunningTimeInMinutes(stoi(line));
+                if (counter == 0){
+                    tempTitle = tempWord;
+                }
 
-    getline(MovieFile, line);
-    movie.setMainStar(line);
+                else if (counter == 1){
+                    tempDescription = tempWord;
+                }
 
-    getline(MovieFile, line);
-    movie.setDistributor(line);
+                else if (counter == 2){
+                    tempGenre = tempWord;
+                }
 
-    getline(MovieFile, line);
-    movie.setReleaseDate(line);
+                else if (counter == 3){
+                    tempRuntime = stoi(tempWord);
+                }
 
-    availableMovies.push_back(movie);
+                else if (counter == 4){
+                    tempMainStar= tempWord;
+                }
+
+                else if (counter == 5){
+                    tempDistributor = tempWord;
+                }
+
+                else if (counter == 6){
+                    tempReleaseDate = tempWord;
+                }
+
+                counter++;
+            }
+
+            Movie* tempMovie  = new Movie(tempTitle, tempDescription, tempGenre, tempRuntime, tempMainStar, tempDistributor, tempReleaseDate);
+            setMovieInAvailableSchedule(*tempMovie);
+        }
+    }
+
 
     MovieFile.close();
 }
 
 void WeeklySchedule::writeToFile(Movie movie1){
         fstream MovieFile;
-        MovieFile.open("C:\\Users\\ASUS\\CLionProjects\\Assessment\\movies.txt", ios::app);
-        MovieFile << movie1.getTitle() << "\n" << movie1.getDescription() << "\n" << movie1.getGenre()
-                  << "\n" << movie1.getRunningTimeInMinutes() << "\n" << movie1.getMainStar() << "\n"
-                  << movie1.getDistributor() << "\n" << movie1.getReleaseDate() << "\n";
+        MovieFile.open("movies.txt", ios::app);
+        MovieFile << movie1.getTitle() << "," << movie1.getDescription() << "," << movie1.getGenre()
+                  << "," << movie1.getRunningTimeInMinutes() << "," << movie1.getMainStar() << ","
+                  << movie1.getDistributor() << "," << movie1.getReleaseDate() << endl;
         MovieFile.close();
 }
 

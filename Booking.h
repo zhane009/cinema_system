@@ -1,6 +1,3 @@
-//
-// Created by ASUS on 05/06/2023.
-//
 
 #ifndef ASSESSMENT_BOOKING_H
 #define ASSESSMENT_BOOKING_H
@@ -12,21 +9,26 @@
 using namespace std;
 
 class Booking{
-    int numberOfTickets;
+    int numberOfTickets[4];
     Movie movie;
     string date;
     string time;
     double totalCost;
     string paymentType;
 
-public:
-    int getNumberOfTickets();
+    const float adultPrice = 9.5;
+    const float childPrice = 5.5;
+    const float seniorPrice = 6.5;
+    const float studentPrice = 7;
 
-    void setNumberOfTickets (int);
+public:
+    int* getNumberOfTickets();
+
+    void setNumberOfTickets (int*);
 
     Movie getMovie();
 
-    void setMovie (Movie);
+    void setMovie (int);
 
     string getDate();
 
@@ -44,11 +46,31 @@ public:
 
     void setPaymentType(string);
 
+    float getAdultPrice();
+
+    float getChildPrice();
+
+    float getSeniorPrice();
+
+    float getStudentPrice();
+
     void book();
 
     int getMovieChoice();
 
-    string getBookingTime(int);
+    void getBookingTime(int);
+
+    void setNumberOfTicketsFromInput();
+
+    void calculateTotalPrice();
+
+    void setPaymentTypeFromInput();
+
+    void displayBookingInformation();
+
+    int checkAndFixError();
+
+    void setDateFromInput();
 };
 
 #endif //ASSESSMENT_BOOKING_H

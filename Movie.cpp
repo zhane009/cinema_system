@@ -2,6 +2,18 @@
 
 using namespace std;
 
+Movie::Movie() {};
+
+Movie::Movie(string tempTitle, string tempDescription, string tempGenre, int tempRuntime, string tempMainStar, string tempDistributor, string tempReleaseDate) {
+    title = tempTitle;
+    description = tempDescription;
+    genre = tempGenre;
+    runningTimeInMinutes = tempRuntime;
+    mainStar = tempMainStar;
+    distributor = tempDistributor;
+    releaseDate = tempReleaseDate;
+}
+
 string Movie::getTitle() {
     return title;
 }

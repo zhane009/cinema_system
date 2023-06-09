@@ -11,33 +11,30 @@
 using namespace std;
 
 int main() {
+
+//    string name;
+//    cout << "Your name: ";
+//    getline(cin, name);
+
     Movie movie;
-//    movie.updateMoviesFromFile();
-////    movie.addMovie(movie.getInput());
-////    Movie movie1 = movie.getInput();
-////    movie.addMovie(movie1);
-//    movie.updateMoviesFromFile();
-////    Movie movie2 = movie.getMovies().operator[](4);
-////    cout << movie2.getTitle() << endl;
-////    cout << movie.getMovies().size() << endl;
-//
-////    movie.displayMovies();
     Booking booking;
-    int index = booking.getMovieChoice();
-//    Movie bookedMovie = movie.getMovies()[index];
 
-//    movie.getMovies().clear();
-//
     WeeklySchedule weeklySchedule;
-
 //    weeklySchedule.writeToFile(movie.getInput());
-//    weeklySchedule.setAvailableTimes(index);
 
     weeklySchedule.readFromFile();
-//    cout << weeklySchedule.getMoviesSize();
 //    weeklySchedule.displayMovies();
+    booking.setDateFromInput();
+    int index = booking.getMovieChoice();
+    booking.setMovie(index);
 //
-    string time =  booking.getBookingTime(index);
-//    cout << "You have made a booking for " << movie.getMovies().at(index).getTitle() << " at " << time << endl;
+    booking.getBookingTime(index);
+////    cout << "You have made a booking \nfor name: " << name << "\nfor movie: " <<  weeklySchedule.getAvailableMovies()[index].getTitle() << "\nat time: " << time << endl;
+    booking.setNumberOfTicketsFromInput();
+    booking.calculateTotalPrice();
+    booking.setPaymentTypeFromInput();
+
+    booking.displayBookingInformation();
+
     return 0;
 }

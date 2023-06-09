@@ -19,6 +19,10 @@ class Movie{
     string releaseDate;
 
 public:
+    Movie();
+
+    Movie(string, string, string, int, string, string, string);
+
     string getTitle();
 
     void setTitle(string);
