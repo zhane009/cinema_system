@@ -55,8 +55,15 @@ void Booking::setPaymentType(string tempPaymentType) {
     paymentType = tempPaymentType;
 }
 
-void Booking::book() {
-    cout << "You have made a booking" << endl;
+void Booking::book(string startTime) {
+    setDateFromInput();
+    int movieIndex = getMovieChoice();
+    setMovie(movieIndex);
+    getBookingTime(movieIndex, startTime);
+    setNumberOfTicketsFromInput();
+    calculateTotalPrice();
+    setPaymentTypeFromInput();
+    displayBookingInformation();
 }
 
 float Booking::getAdultPrice() {
@@ -103,11 +110,13 @@ int Booking::getMovieChoice() {
     return temp - 1;
 }
 
-void Booking::getBookingTime(int movieIndex){
+void Booking::getBookingTime(int movieIndex, string startTime){
     int input;
     WeeklySchedule schedule;
     schedule.readFromFile();
-    schedule.setAvailableTimes(movieIndex);
+//    Movie* ptr = schedule.getAvailableMovies();
+//    Movie tempMovie = *(ptr + movieIndex);
+    schedule.setAvailableTimes(movieIndex, startTime);
     bool loop = true;
 
     string *timePtr= schedule.getAvailableTimes();
@@ -169,11 +178,16 @@ void Booking::setPaymentTypeFromInput() {
     bool loop = true;
 
     while(loop){
-//        getline(cin, tempStr);
-//        tempInt = stoi(tempStr);
         tempInt = checkAndFixError();
         if (tempInt == 1){
             setPaymentType("Card");
+            int card, expDate, cvv;
+            cout << "what is your card number? :";
+            cin >> card;
+            cout << "what is the exp date?: ";
+            cin >> expDate;
+            cout << "what is the cvv?: ";
+            cin >> cvv;
             loop = false;
         }
 
@@ -187,7 +201,6 @@ void Booking::setPaymentTypeFromInput() {
         }
 
     }
-
 
 }
 
@@ -257,4 +270,5 @@ void Booking::setDateFromInput() {
     }
     setDate(days[temp-1]);
 }
+
 

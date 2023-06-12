@@ -10,6 +10,7 @@
 #include <fstream>
 #include <sstream>
 #include "Movie.h"
+#include "Booking.h"
 
 using namespace std;
 
@@ -22,19 +23,26 @@ public:
 
     void setMovieInAvailableSchedule(Movie);
 
-    string* getAvailableTimes();
-
-    void setAvailableTimes(int);
-
     void readFromFile();
 
     void writeToFile(Movie);
 
     int getMoviesSize();
 
-    int getTimesSize();
-
     void displayMovies();
 
+    int checkAndFixError();
+
+    void setAvailableTimes(int, string);
+
+    string* getAvailableTimes();
+
+    void editAvailableTimes();
+
+    int getTimesSize();
+
+    void displayAllAvailableTimes();
+
+    void setTimeInAvailableTimes(string tempTime);
 };
 #endif //ASSESSMENT_WEEKLYSCHEDULE_H

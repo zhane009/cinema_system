@@ -3,8 +3,8 @@
 #define ASSESSMENT_BOOKING_H
 
 #include <iostream>
-#include "Movie.h"
 #include "WeeklySchedule.h"
+
 
 using namespace std;
 
@@ -54,11 +54,11 @@ public:
 
     float getStudentPrice();
 
-    void book();
+    void book(string = "10 : 15");
 
     int getMovieChoice();
 
-    void getBookingTime(int);
+    void getBookingTime(int, string);
 
     void setNumberOfTicketsFromInput();
 

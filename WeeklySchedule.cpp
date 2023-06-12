@@ -10,93 +10,12 @@ void WeeklySchedule::setMovieInAvailableSchedule(Movie movie) {
     availableMovies.push_back(movie);
 }
 
-string* WeeklySchedule::getAvailableTimes() {
-    return availableTimes.data();
-}
-
-void WeeklySchedule::setAvailableTimes(int movieIndex) {
-    Movie *ptr = getAvailableMovies();
-    Movie movie = *(ptr+movieIndex);
-
-    int runTime = movie.getRunningTimeInMinutes();
-    int minute = runTime % 60;
-    int hour = (runTime - (runTime % 60)) / 60;
-
-    int startHour = 10;
-    int startMinute = 15;
-    string str = to_string(startHour) + " : " + to_string(startMinute);
-    availableTimes.push_back(str);
-
-    while (true){
-        if ((startHour + hour) < 21){
-            if ((startMinute + minute + 25) < 60){
-                startHour += hour;
-                startMinute += minute + 25;
-            } else{
-                startMinute += minute - 60 + 25;
-                startHour += hour + 1;
-            }
-        } else{
-            break;
-        }
-        string str1 = to_string(startHour) + " : " + to_string(startMinute);
-        availableTimes.push_back(str1);
-    }
-
-}
-
 void WeeklySchedule::readFromFile() {
     Movie movie;
     string line,tempWord, tempTitle, tempDescription, tempGenre, tempMainStar, tempDistributor, tempReleaseDate;
     int tempRuntime;
     ifstream MovieFile;
     MovieFile.open("movies.txt", ios::in);
-
-//    bool loop = true;
-//    int count = 1;
-//
-//    while (loop){
-//
-//        if (count == 1){
-//            getline(MovieFile, line);
-//            movie.setTitle(line);
-//        }
-//
-//        getline(MovieFile, line);
-//        movie.setDescription(line);
-//
-//        getline(MovieFile, line);
-//        movie.setGenre(line);
-//
-//        getline(MovieFile, line);
-//        movie.setRunningTimeInMinutes(stoi(line));
-//
-//        getline(MovieFile, line);
-//        movie.setMainStar(line);
-//
-//        getline(MovieFile, line);
-//        movie.setDistributor(line);
-//
-//        getline(MovieFile, line);
-//        movie.setReleaseDate(line);
-//
-//        getline(MovieFile, line);
-//
-//        if (line.empty()){
-//            availableMovies.push_back(movie);
-//        }
-//
-//        getline(MovieFile, line);
-//        if (line.empty()){
-//            loop = false;
-//        }
-//        else{
-//            movie.setTitle(line);
-//        }
-//
-//        count ++;
-//
-//    }
 
     if (MovieFile.is_open()){
         while (getline(MovieFile, line)){
@@ -158,10 +77,6 @@ int WeeklySchedule::getMoviesSize() {
     return availableMovies.size();
 }
 
-int WeeklySchedule::getTimesSize() {
-    return availableTimes.size();
-}
-
 void WeeklySchedule::displayMovies() {
     cout << "All available movies are : " << endl;
     for (int i = 0; i < availableMovies.size(); i++) {
@@ -174,3 +89,122 @@ void WeeklySchedule::displayMovies() {
         cout << "Release Date : " << availableMovies[i].getReleaseDate() << "\n"<< endl;
     }
 }
+
+int WeeklySchedule::checkAndFixError() {
+    int temp;
+    while (!(cin >> temp)){
+        cout << "Invalid Input. Please type in only an integer." << endl;
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
+
+    return temp;
+
+}
+
+void WeeklySchedule::setAvailableTimes(int movieIndex, string startTime) {
+    Movie *ptr = getAvailableMovies();
+    Movie movie = *(ptr+movieIndex);
+    string temp;
+    int startHour;
+    int startMinute;
+    int counter = 0;
+
+    int runTime = movie.getRunningTimeInMinutes();
+    int minute = runTime % 60;
+    int hour = (runTime - (runTime % 60)) / 60;
+
+    stringstream stream(startTime);
+    while (getline(stream >> ws, temp, ':')){
+
+        if (counter == 0){
+            startHour = stoi(temp);
+        }
+        else if (counter == 1){
+            startMinute = stoi(temp);
+        }
+        counter ++;
+    }
+    string str = to_string(startHour) + " : " + to_string(startMinute);
+    availableTimes.push_back(str);
+
+
+    while (true){
+        if ((startHour + hour) < 21){
+            if ((startMinute + minute + 25) < 60){
+                startHour += hour;
+                startMinute += minute + 25;
+            } else{
+                startMinute += minute - 60 + 25;
+                startHour += hour + 1;
+            }
+        } else{
+            break;
+        }
+        string str1 = to_string(startHour) + " : " + to_string(startMinute);
+        availableTimes.push_back(str1);
+    }
+}
+
+void WeeklySchedule::editAvailableTimes() {
+    Booking booking;
+    int tempHour, tempMinute;
+    string str;
+    readFromFile();
+
+    cout << "The schedule of which movie do you want to edit?" << endl;
+    int index = booking.getMovieChoice();
+
+    cout << "What do you want the starting time to be instead of 10 : 15?" << endl;
+
+    cout << "Type in the hour mark: ";
+    while(true){
+        tempHour = checkAndFixError();
+        if (tempHour < 10 or tempHour > 21){
+            cout << "Please type in a reasonable hour. (i.e. from 10 to 21)" << endl;
+        }
+
+        else {
+            break;
+        }
+    }
+
+    cout << "What is the minute mark: ";
+    while (true){
+        tempMinute = checkAndFixError();
+        if (tempMinute < 0 or tempMinute > 59){
+            cout << "The minute mark cannot be less than 0 or greater than 59" << endl;
+        }
+        else {
+            break;
+        }
+    }
+
+    str = to_string(tempHour) + " : " + to_string(tempMinute);
+    setAvailableTimes(index, str);
+
+    cout << "The new schedule for the movie is : " << endl;
+    displayAllAvailableTimes();
+
+}
+
+string* WeeklySchedule::getAvailableTimes() {
+    return availableTimes.data();
+}
+
+void WeeklySchedule::setTimeInAvailableTimes(string tempTime){
+    availableTimes.push_back(tempTime);
+}
+
+void WeeklySchedule::displayAllAvailableTimes() {
+    string* ptr = getAvailableTimes();
+    for (int i = 0; i < getTimesSize(); i++){
+        cout << i+1 << ". " << *(ptr+i) << endl;
+    }
+}
+
+int WeeklySchedule::getTimesSize() {
+    return availableTimes.size();
+}
+
+

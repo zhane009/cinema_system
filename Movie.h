@@ -6,6 +6,9 @@
 #define ASSESSMENT_MOVIE_H
 
 #include <iostream>
+#include "vector"
+//#include "WeeklySchedule.h"
+//#include "Booking.h"
 
 using namespace std;
 
