@@ -114,8 +114,7 @@ void Booking::getBookingTime(int movieIndex, string startTime){
     int input;
     WeeklySchedule schedule;
     schedule.readFromFile();
-//    Movie* ptr = schedule.getAvailableMovies();
-//    Movie tempMovie = *(ptr + movieIndex);
+
     schedule.setAvailableTimes(movieIndex, startTime);
     bool loop = true;
 

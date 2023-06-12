@@ -44,9 +44,9 @@ int main() {
 //    weeklySchedule.setAvailableTimes(1, "10 : 15");
 //
 
-    weeklySchedule.editAvailableTimes();
+    string str = weeklySchedule.editAvailableTimes();
+//    weeklySchedule.displayAllAvailableTimes();
     booking.book();
-
 
     return 0;
 }

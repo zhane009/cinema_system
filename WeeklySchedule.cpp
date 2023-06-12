@@ -134,9 +134,20 @@ void WeeklySchedule::setAvailableTimes(int movieIndex, string startTime) {
             if ((startMinute + minute + 25) < 60){
                 startHour += hour;
                 startMinute += minute + 25;
+                startMinute = ((startMinute + 2)/5)*5;
+                if (startMinute >= 60){
+                    startHour += 1;
+                    startMinute = 0;
+                }
             } else{
                 startMinute += minute - 60 + 25;
                 startHour += hour + 1;
+                startMinute = ((startMinute + 2)/5)*5;
+                if (startMinute >= 60){
+
+                    startHour += 1;
+                    startMinute = 0;
+                }
             }
         } else{
             break;
@@ -146,7 +157,7 @@ void WeeklySchedule::setAvailableTimes(int movieIndex, string startTime) {
     }
 }
 
-void WeeklySchedule::editAvailableTimes() {
+string WeeklySchedule::editAvailableTimes() {
     Booking booking;
     int tempHour, tempMinute;
     string str;
@@ -185,6 +196,8 @@ void WeeklySchedule::editAvailableTimes() {
 
     cout << "The new schedule for the movie is : " << endl;
     displayAllAvailableTimes();
+
+    return str;
 
 }
 

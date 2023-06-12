@@ -11,6 +11,7 @@
 #include <sstream>
 #include "Movie.h"
 #include "Booking.h"
+#include <cmath>
 
 using namespace std;
 
@@ -37,7 +38,7 @@ public:
 
     string* getAvailableTimes();
 
-    void editAvailableTimes();
+    string editAvailableTimes();
 
     int getTimesSize();
 

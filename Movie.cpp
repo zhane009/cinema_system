@@ -105,23 +105,3 @@ Movie Movie::getInput() {
     return movie;
 
 }
-
-string* Movie::getAvailableTimes() {
-    return availableTimes.data();
-}
-
-void Movie::setTimeInAvailableTimes(string tempTime){
-    availableTimes.push_back(tempTime);
-}
-
-void Movie::displayAllAvailableTimes() {
-    string* ptr = getAvailableTimes();
-    for (int i = 0; i < getTimesSize(); i++){
-        cout << i+1 << ". " << *(ptr+i) << endl;
-    }
-}
-
-int Movie::getTimesSize() {
-    return availableTimes.size();
-}
-
