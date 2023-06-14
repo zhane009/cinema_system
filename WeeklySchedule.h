@@ -10,12 +10,13 @@
 #include <fstream>
 #include <sstream>
 #include "Movie.h"
-#include "Booking.h"
-#include <cmath>
+#include "Screen.h"
 
 using namespace std;
 
 class WeeklySchedule {
+private:
+    vector<Screen> screens;
     vector<Movie> availableMovies;
     vector<string> availableTimes;
 
@@ -24,9 +25,9 @@ public:
 
     void setMovieInAvailableSchedule(Movie);
 
-    void readFromFile();
+    void readMoviesFromFile(int);
 
-    void writeToFile(Movie);
+    void writeToMovieFile(Movie, int);
 
     int getMoviesSize();
 
@@ -45,5 +46,22 @@ public:
     void displayAllAvailableTimes();
 
     void setTimeInAvailableTimes(string tempTime);
+
+    int getMovieChoice();
+
+    Screen* getScreens();
+
+    void setScreenInScreens(Screen);
+
+    void readScreenFromFile();
+
+    void writeToScreenFile();
+
+    void displayScreens();
+
+    int getScreenSize();
+
 };
+
+
 #endif //ASSESSMENT_WEEKLYSCHEDULE_H

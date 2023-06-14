@@ -10,12 +10,19 @@ void WeeklySchedule::setMovieInAvailableSchedule(Movie movie) {
     availableMovies.push_back(movie);
 }
 
-void WeeklySchedule::readFromFile() {
+void WeeklySchedule::readMoviesFromFile(int week) {
     Movie movie;
     string line,tempWord, tempTitle, tempDescription, tempGenre, tempMainStar, tempDistributor, tempReleaseDate;
     int tempRuntime;
     ifstream MovieFile;
-    MovieFile.open("movies.txt", ios::in);
+    if (week == 1){
+        MovieFile.open("week1Movies.txt", ios::in);
+    } else {
+        MovieFile.open("week2Movies.txt", ios::in);
+    }
+
+//    MovieFile.open("week1Movies.txt", ios::in);
+
 
     if (MovieFile.is_open()){
         while (getline(MovieFile, line)){
@@ -64,9 +71,14 @@ void WeeklySchedule::readFromFile() {
     MovieFile.close();
 }
 
-void WeeklySchedule::writeToFile(Movie movie1){
+void WeeklySchedule::writeToMovieFile(Movie movie1, int week){
         fstream MovieFile;
-        MovieFile.open("movies.txt", ios::app);
+        if (week == 1){
+            MovieFile.open("week1Movies.txt", ios::app);
+        }
+        else {
+            MovieFile.open("week2Movies.txt", ios::app);
+        }
         MovieFile << movie1.getTitle() << "," << movie1.getDescription() << "," << movie1.getGenre()
                   << "," << movie1.getRunningTimeInMinutes() << "," << movie1.getMainStar() << ","
                   << movie1.getDistributor() << "," << movie1.getReleaseDate() << endl;
@@ -103,6 +115,7 @@ int WeeklySchedule::checkAndFixError() {
 }
 
 void WeeklySchedule::setAvailableTimes(int movieIndex, string startTime) {
+    availableTimes.clear();
     Movie *ptr = getAvailableMovies();
     Movie movie = *(ptr+movieIndex);
     string temp;
@@ -134,7 +147,7 @@ void WeeklySchedule::setAvailableTimes(int movieIndex, string startTime) {
             if ((startMinute + minute + 25) < 60){
                 startHour += hour;
                 startMinute += minute + 25;
-                startMinute = ((startMinute + 2)/5)*5;
+                startMinute = ((startMinute + 4)/5)*5;
                 if (startMinute >= 60){
                     startHour += 1;
                     startMinute = 0;
@@ -142,7 +155,7 @@ void WeeklySchedule::setAvailableTimes(int movieIndex, string startTime) {
             } else{
                 startMinute += minute - 60 + 25;
                 startHour += hour + 1;
-                startMinute = ((startMinute + 2)/5)*5;
+                startMinute = ((startMinute + 4)/5)*5;
                 if (startMinute >= 60){
 
                     startHour += 1;
@@ -158,13 +171,11 @@ void WeeklySchedule::setAvailableTimes(int movieIndex, string startTime) {
 }
 
 string WeeklySchedule::editAvailableTimes() {
-    Booking booking;
     int tempHour, tempMinute;
     string str;
-    readFromFile();
 
     cout << "The schedule of which movie do you want to edit?" << endl;
-    int index = booking.getMovieChoice();
+    int index = getMovieChoice();
 
     cout << "What do you want the starting time to be instead of 10 : 15?" << endl;
 
@@ -219,5 +230,99 @@ void WeeklySchedule::displayAllAvailableTimes() {
 int WeeklySchedule::getTimesSize() {
     return availableTimes.size();
 }
+
+int WeeklySchedule::getMovieChoice() {
+//    WeeklySchedule schedule;
+//    schedule.readMoviesFromFile();
+    int temp;
+    Movie *ptr = getAvailableMovies();
+    bool loop = true;
+
+    for (int i = 0; i < getMoviesSize(); i++) {
+        cout << i + 1 << ". Title : " << ptr[i].getTitle() << endl;
+    }
+
+    cout << "Choose a number : ";
+
+    while (loop){
+        temp = checkAndFixError();
+
+        if (temp > getMoviesSize() || temp <= 0){
+            cout << "Please choose a valid option" << endl;
+        }
+
+        else {
+            loop = false;
+        }
+    }
+    return temp - 1;
+}
+
+Screen* WeeklySchedule::getScreens() {
+    return screens.data();
+}
+
+void WeeklySchedule::readScreenFromFile() {
+    int tempID, tempSeats, tempMovie;
+    string line, tempWord, tempType;
+    int i = 0;
+
+    fstream ScreenFile;
+    ScreenFile.open("screens.txt");
+
+    if (ScreenFile.is_open()){
+
+        while (i < availableMovies.size() && getline(ScreenFile, line)){
+            stringstream movieString(line);
+            int counter = 0;
+
+            while (getline(movieString >> ws, tempWord, ',')){
+
+                if (counter == 0){
+                    tempID = stoi(tempWord);
+                }
+
+                else if (counter == 1){
+                    tempSeats = stoi(tempWord);
+                }
+
+                else if (counter == 2){
+                    tempMovie = stoi(tempWord);
+                }
+
+                else if (counter == 3){
+                    tempType = tempWord;
+                }
+                counter++;
+            }
+
+            Movie temp = availableMovies.at(tempMovie - 1);
+
+            Screen* tempScreen = new Screen(tempID, tempSeats, temp, tempType);
+            setScreenInScreens(*tempScreen);
+            i++;
+        }
+    }
+    ScreenFile.close();
+
+}
+
+int WeeklySchedule::getScreenSize() {
+    return screens.size();
+}
+
+void WeeklySchedule::setScreenInScreens(Screen tempScreen) {
+    screens.push_back(tempScreen);
+}
+
+void WeeklySchedule::displayScreens(){
+    Screen* ptr = getScreens();
+    for (int i = 0; i < screens.size(); i++) {
+        cout << ptr[i].getScreenId() << ". " << ptr[i].getNumberOfSeats() << ", " << ptr[i].getScreenType() << ", " <<
+        ptr[i].getCurrentMovie().getTitle() << endl;
+
+    }
+}
+
 
 

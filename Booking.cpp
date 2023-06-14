@@ -16,10 +16,9 @@ Movie Booking::getMovie() {
     return movie;
 }
 
-void Booking::setMovie (int movieIndex) {
-    WeeklySchedule schedule;
-    schedule.readFromFile();
-    movie = schedule.getAvailableMovies()[movieIndex];
+void Booking::setMovie (int movieIndex, Movie* availableMovies) {
+
+    movie = availableMovies[movieIndex];
 
 }
 
@@ -55,15 +54,24 @@ void Booking::setPaymentType(string tempPaymentType) {
     paymentType = tempPaymentType;
 }
 
-void Booking::book(string startTime) {
+void Booking::book(WeeklySchedule* schedule, string startTime) {
     setDateFromInput();
-    int movieIndex = getMovieChoice();
-    setMovie(movieIndex);
-    getBookingTime(movieIndex, startTime);
+    int movieIndex = getMovieChoice(schedule);
+    setMovie(movieIndex, schedule->getAvailableMovies());
+    getBookingTime(movieIndex, startTime, schedule);
     setNumberOfTicketsFromInput();
     calculateTotalPrice();
     setPaymentTypeFromInput();
     displayBookingInformation();
+    writeToFile();
+}
+
+Screen Booking::getScreen() {
+    return screen;
+}
+
+void Booking::setScreen(int index, Screen *screens) {
+    screen = screens[index];
 }
 
 float Booking::getAdultPrice() {
@@ -82,15 +90,16 @@ float Booking::getStudentPrice() {
     return studentPrice;
 }
 
-int Booking::getMovieChoice() {
-    WeeklySchedule schedule;
-    schedule.readFromFile();
+int Booking::getMovieChoice(WeeklySchedule* schedule) {
+//    WeeklySchedule schedule;
+//    schedule.readMoviesFromFile();
     int temp;
-    Movie *ptr = schedule.getAvailableMovies();
+    Movie *ptr = schedule->getAvailableMovies();
+    Screen *ptr2 = schedule->getScreens();
     bool loop = true;
 
-    for (int i = 0; i < schedule.getMoviesSize(); i++) {
-        cout << i + 1 << ". Title : " << ptr[i].getTitle() << endl;
+    for (int i = 0; i < schedule->getMoviesSize(); i++) {
+        cout << i + 1 << ". Title : " << ptr[i].getTitle() << " at Screen: " << ptr2[i].getScreenType() << endl;
     }
 
     cout << "Choose a number : ";
@@ -98,7 +107,7 @@ int Booking::getMovieChoice() {
     while (loop){
         temp = checkAndFixError();
 
-        if (temp > schedule.getMoviesSize() || temp <= 0){
+        if (temp > schedule->getMoviesSize() || temp <= 0){
             cout << "Please choose a valid option" << endl;
         }
 
@@ -107,39 +116,40 @@ int Booking::getMovieChoice() {
         }
     }
 
+    setMovie(temp-1, schedule->getAvailableMovies());
+    setScreen(temp-1, schedule->getScreens());
     return temp - 1;
 }
 
-void Booking::getBookingTime(int movieIndex, string startTime){
+void Booking::getBookingTime(int movieIndex, string startTime, WeeklySchedule* schedule){
     int input;
-    WeeklySchedule schedule;
-    schedule.readFromFile();
-
-    schedule.setAvailableTimes(movieIndex, startTime);
+//
+    schedule->setAvailableTimes(movieIndex, startTime);
     bool loop = true;
+//
+    string *timePtr= schedule->getAvailableTimes();
 
-    string *timePtr= schedule.getAvailableTimes();
-
-    for (int i = 0; i < schedule.getTimesSize(); i ++){
+    for (int i = 0; i < schedule->getTimesSize(); i ++){
         cout << i + 1 << ". " << timePtr[i] << endl;
     }
 
     cout << "Choose an option : ";
     while (loop){
         input = checkAndFixError();
-        if (input > schedule.getTimesSize() || input <= 0){
+        if (input > schedule->getTimesSize() || input <= 0){
             cout << "Please choose a valid option" << endl;
         }
         else {
             loop = false;
         }
     }
-    setTime(*(timePtr + (input - 1)));
+    setTime(*(schedule->getAvailableTimes() + (input - 1)));
 }
 
 void Booking::setNumberOfTicketsFromInput() {
     string tempString;
     int tempNumber = 0;
+
     int tempTickets[4];
     string ques[4] = {
             "Adult Tickets: ",
@@ -148,13 +158,28 @@ void Booking::setNumberOfTicketsFromInput() {
             "Student Tickets: "
     };
 
-    for (int i = 0; i < 4; ++i) {
-        cout << ques[i];
-        tempNumber = checkAndFixError();
-        tempTickets[i] = tempNumber;
-    }
 
-    setNumberOfTickets(tempTickets);
+    while (true){
+        int total = 0;
+        for (int i = 0; i < 4; ++i) {
+            cout << ques[i];
+            tempNumber = checkAndFixError();
+            tempTickets[i] = tempNumber;
+            total += tempNumber;
+        }
+
+        if (screen.getNumberOfSeats() >= total){
+            setNumberOfTickets(tempTickets);
+            break;
+        }
+
+        else  {
+            cout << "Your tickets exceed the maximum capacity of the screen. Its capacity is "
+                << screen.getNumberOfSeats() << ". Please try again."<< endl;
+        }
+
+
+    }
 }
 
 void Booking::calculateTotalPrice() {
@@ -268,6 +293,101 @@ void Booking::setDateFromInput() {
 
     }
     setDate(days[temp-1]);
+}
+
+void Booking::writeToFile(){
+//    WeeklySchedule schedule;
+//    schedule.readMoviesFromFile();
+    fstream BookingFile;
+    BookingFile.open("booking.txt", ios::app);
+
+    string tempScreen;
+    int adultTicket, childTicket, seniorTicket, studentTicket;
+
+    for (int i = 0; i < 4; i++){
+        if (i == 0){
+            adultTicket = getNumberOfTickets()[i];
+        }
+
+        else if (i == 1){
+            childTicket = getNumberOfTickets()[i];
+        }
+
+        else if (i == 2){
+            seniorTicket = getNumberOfTickets()[i];
+        }
+
+        else {
+            studentTicket = getNumberOfTickets()[i];
+        }
+    }
+
+
+    BookingFile << getMovie().getTitle() << "," << getScreen().getScreenType() << "," << getDate() << "," <<getTime() << ","
+                << adultTicket << "," << childTicket << "," << seniorTicket << "," << studentTicket
+                << "," << getTotalCost() << "," << getPaymentType() << endl;
+
+    BookingFile.close();
+}
+
+void Booking::displayAllBookingsFromFile(){
+    string tempLine, tempWord, tempTitle, tempTime, tempDate, tempPaymentType, tempScreen;
+    int tempAdult, tempChild, tempSenior, tempStudent;
+    double tempTotalCost;
+
+    fstream BookingFile;
+    BookingFile.open("booking.txt");
+    cout << "All Bookings: \n" << endl;
+
+    while (getline(BookingFile, tempLine)){
+        stringstream stream(tempLine);
+        int counter  = 0;
+
+        while (getline(stream >> ws, tempWord, ',')){
+            if (counter == 0){
+                tempTitle = tempWord;
+            }
+            else if (counter == 2){
+                tempScreen = tempWord;
+            }
+            else if (counter == 2){
+                tempDate = tempWord;
+            }
+            else if (counter == 3){
+                tempTime = tempWord;
+            }
+            else if (counter == 4){
+                tempAdult = stoi(tempWord);
+            }
+            else if (counter == 5){
+                tempChild = stoi(tempWord);
+            }
+            else if (counter == 6){
+                tempSenior = stoi(tempWord);
+            }
+            else if (counter == 7){
+                tempStudent = stoi(tempWord);
+            }
+            else if (counter == 8){
+                tempTotalCost = stof(tempWord);
+            }
+            else if (counter == 9){
+                tempPaymentType = tempWord;
+            }
+            counter++;
+        }
+        cout << "Movie Title: " << tempTitle << endl;
+        cout << "Screen Type: " << tempScreen << endl;
+        cout << "Day: " << tempDate << endl;
+        cout << "Time: " << tempTime<< endl;
+        cout << "Adult Tickets: " << tempAdult << endl;
+        cout << "Child Tickets: " << tempChild << endl;
+        cout << "Senior Tickets: " << tempSenior << endl;
+        cout << "Student Tickets: " << tempStudent << endl;
+        cout << "Total Number of Tickets: " << tempAdult + tempChild + tempSenior + tempStudent << endl;
+        cout <<  "Total Cost: " << tempTotalCost << endl;
+        cout << "Payment Type: " << tempPaymentType << "\n" << endl;
+    }
 }
 
 

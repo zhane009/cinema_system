@@ -1,0 +1,4 @@
+Spider-Man : Across the Spider Verse,An animated masterpiece,Action and Adventure,134,Miles Morales,Sony,04/06/2023
+The Batman,The SuperHero Action,Adventure,99,Ezra Miller,DC,14/06/2023
+Guardians of the Galaxy Vol. 2,Superheroes galore,Action and Adventure,130,Star Lord,Marvel,12/06/2023
+Transformers: Rise of the Beasts,Robots fighting each other,Action and Fantasy,150,Optimus Prime,Universal,08/06/2023

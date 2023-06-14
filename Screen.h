@@ -15,6 +15,10 @@ class Screen{
 
 public:
 
+    Screen();
+
+    Screen(int, int, Movie, string);
+
     int getScreenId();
 
     void setScreenId(int);
@@ -25,7 +29,7 @@ public:
 
     Movie getCurrentMovie();
 
-    void setCUrrentMovie(Movie);
+    void setCurrentMovie(Movie);
 
     string getScreenType();
 

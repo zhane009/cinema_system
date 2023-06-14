@@ -1,0 +1,3 @@
+The Flash,IMAX 2D,Friday,16 : 30,1,1,1,1,28.5,Cash
+Guardians of the Galaxy Vol. 3,3D,Saturday,18 : 0,1,2,3,4,68,Cash
+Transformers: Rise of the Beasts,IMAX 3D,Thursday,16 : 5,1,2,34,2,255.5,Cash

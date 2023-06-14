@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include "WeeklySchedule.h"
+//#include "Movie.h"
+//#include "Screen.h"
 
 
 using namespace std;
@@ -15,6 +17,7 @@ class Booking{
     string time;
     double totalCost;
     string paymentType;
+    Screen screen;
 
     const float adultPrice = 9.5;
     const float childPrice = 5.5;
@@ -28,7 +31,7 @@ public:
 
     Movie getMovie();
 
-    void setMovie (int);
+    void setMovie (int, Movie*);
 
     string getDate();
 
@@ -46,6 +49,10 @@ public:
 
     void setPaymentType(string);
 
+    Screen getScreen();
+
+    void setScreen(int, Screen*);
+
     float getAdultPrice();
 
     float getChildPrice();
@@ -54,11 +61,11 @@ public:
 
     float getStudentPrice();
 
-    void book(string = "10 : 15");
+    void book(WeeklySchedule* schedule, string = "10 : 15");
 
-    int getMovieChoice();
+    int getMovieChoice(WeeklySchedule* schedule);
 
-    void getBookingTime(int, string);
+    void getBookingTime(int, string, WeeklySchedule* schedule);
 
     void setNumberOfTicketsFromInput();
 
@@ -71,6 +78,10 @@ public:
     int checkAndFixError();
 
     void setDateFromInput();
+
+    void writeToFile();
+
+    void displayAllBookingsFromFile();
 };
 
 #endif //ASSESSMENT_BOOKING_H
