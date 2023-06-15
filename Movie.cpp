@@ -76,6 +76,7 @@ Movie Movie::getInput() {
     cin.ignore();
     Movie movie;
     string input;
+    int temp;
     cout << "Movie Title: ";
     getline(cin, input);
     movie.setTitle(input);
@@ -89,10 +90,12 @@ Movie Movie::getInput() {
     movie.setGenre(input);
 
     cout << "Running Time in Minutes: ";
-    getline(cin, input);
-    movie.setRunningTimeInMinutes(stoi(input));
+    temp = checkAndFixError();
+    movie.setRunningTimeInMinutes(temp);
 
     cout << "Name of Main Star: ";
+    cin.ignore();
+    cin.clear();
     getline(cin, input);
     movie.setMainStar(input);
 
@@ -100,10 +103,57 @@ Movie Movie::getInput() {
     getline(cin, input);
     movie.setDistributor(input);
 
-    cout << "Release Date of the Movie: ";
-    getline(cin, input);
+    cout << "Release Date of the Movie in dd/mm/yyyy format: ";
+
+    do {
+        getline(cin, input);
+    }
+    while (!checkDateFormat(input));
     movie.setReleaseDate(input);
 
     return movie;
+
+}
+
+int Movie::checkAndFixError() {
+    int temp;
+    while (!(cin >> temp)){
+        cout << "Invalid Input. Please type in only an integer." << endl;
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
+
+    return temp;
+
+}
+
+bool Movie::checkDateFormat(string date) {
+
+        regex pattern(R"((\d{2})/(\d{2})/(\d{4}))");
+        smatch matches;
+
+        if (regex_match(date, matches, pattern)) {
+            int day = stoi(matches[1]);
+            int month = stoi(matches[2]);
+            int year = stoi(matches[3]);
+
+            if (day >= 1 && day <= 31 && month >= 1 && month <= 12 && year >= 1000 && year <= 9999) {
+                if (month == 2 && day > 28) {
+                    cout << "February only have 28 days" << endl;
+                    return false;
+                }
+                if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30){
+                    cout << "That month only has 30 days" << endl;
+                    return false;
+                }
+                else{
+                    return true; // Date format and numbers are valid
+                }
+            }
+        }
+
+
+        cout << "Date format is incorrect. Try again" << endl;
+        return false; // Date format or numbers are invalid
 
 }

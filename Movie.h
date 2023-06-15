@@ -6,7 +6,8 @@
 #define ASSESSMENT_MOVIE_H
 
 #include <iostream>
-#include "vector"
+#include <vector>
+#include <regex>
 //#include "WeeklySchedule.h"
 //#include "Booking.h"
 
@@ -55,6 +56,10 @@ public:
     void setReleaseDate(string);
 
     Movie getInput();
+
+    int checkAndFixError();
+
+    bool checkDateFormat(string);
 
 };
 
