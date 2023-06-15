@@ -347,7 +347,7 @@ void Booking::displayAllBookingsFromFile(){
             if (counter == 0){
                 tempTitle = tempWord;
             }
-            else if (counter == 2){
+            else if (counter == 1){
                 tempScreen = tempWord;
             }
             else if (counter == 2){

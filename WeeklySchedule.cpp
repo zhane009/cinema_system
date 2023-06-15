@@ -11,6 +11,7 @@ void WeeklySchedule::setMovieInAvailableSchedule(Movie movie) {
 }
 
 void WeeklySchedule::readMoviesFromFile(int week) {
+    availableMovies.clear();
     Movie movie;
     string line,tempWord, tempTitle, tempDescription, tempGenre, tempMainStar, tempDistributor, tempReleaseDate;
     int tempRuntime;
@@ -174,8 +175,8 @@ string WeeklySchedule::editAvailableTimes() {
     int tempHour, tempMinute;
     string str;
 
-    cout << "The schedule of which movie do you want to edit?" << endl;
-    int index = getMovieChoice();
+//    cout << "The schedule of which movie do you want to edit?" << endl;
+//    int index = getMovieChoice();
 
     cout << "What do you want the starting time to be instead of 10 : 15?" << endl;
 
@@ -198,15 +199,20 @@ string WeeklySchedule::editAvailableTimes() {
             cout << "The minute mark cannot be less than 0 or greater than 59" << endl;
         }
         else {
-            break;
+            if (tempHour == 10 && tempMinute < 15) {
+                cout << "The cinema only opens at 10 : 15. Type in the minute mark again." << endl;
+            }
+            else {
+                break;
+            }
         }
     }
 
     str = to_string(tempHour) + " : " + to_string(tempMinute);
-    setAvailableTimes(index, str);
+//    setAvailableTimes(index, str);
 
-    cout << "The new schedule for the movie is : " << endl;
-    displayAllAvailableTimes();
+//    cout << "The new schedule for the movie is : " << endl;
+//    displayAllAvailableTimes();
 
     return str;
 
@@ -322,6 +328,25 @@ void WeeklySchedule::displayScreens(){
         ptr[i].getCurrentMovie().getTitle() << endl;
 
     }
+}
+
+int WeeklySchedule::getWeekChoice() {
+    int weekChoice;
+
+    cout << "1. This week\n"
+         << "2. Next week\n"
+         << "For which week?: ";
+
+    while (true){
+        weekChoice = checkAndFixError();
+        if (weekChoice <= 2 && weekChoice > 0){
+            break;
+        }
+        else {
+            cout << "Please choose a valid option" << endl;
+        }
+    }
+    return weekChoice;
 }
 
 

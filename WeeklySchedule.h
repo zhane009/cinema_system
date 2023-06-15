@@ -61,6 +61,8 @@ public:
 
     int getScreenSize();
 
+    int getWeekChoice();
+
 };
 
 

@@ -12,6 +12,30 @@
 
 class Cinema {
 
+    Movie movie;
+    Screen screen;
+    WeeklySchedule weeklySchedule;
+    Booking booking;
+
+public:
+    Movie getMovie();
+
+    void setMovie(Movie);
+
+    Screen getScreen();
+
+    void setScreen(Screen);
+
+    WeeklySchedule getWeeklySchedule();
+
+    void setWeeklySchedule(WeeklySchedule);
+
+    Booking getBooking();
+
+    void setBooking(Booking);
+
+    void execute();
+
 };
 
 #endif //ASSESSMENT_CINEMA_H
