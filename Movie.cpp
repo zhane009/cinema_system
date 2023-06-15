@@ -72,6 +72,8 @@ void Movie::setReleaseDate(string tempReleaseDate) {
 
 Movie Movie::getInput() {
 
+    cin.clear();
+    cin.ignore();
     Movie movie;
     string input;
     cout << "Movie Title: ";

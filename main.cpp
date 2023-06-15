@@ -39,8 +39,8 @@ int main() {
         if (menuChoice == 1) {
             int weekChoice = schedule.getWeekChoice();
 
-            Movie tempMovie = movie.getInput();
-            schedule.writeToMovieFile(tempMovie, weekChoice);
+//            Movie tempMovie = movie.getInput();
+            schedule.writeToMovieFile(movie.getInput(), weekChoice);
 
         }
 
