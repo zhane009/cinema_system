@@ -1,5 +1,4 @@
 Spider-Man : Into the Spider Verse,An animated masterpiece,Action and Adventure,134,Miles Morales,Sony,04/06/2023
-The Flash,The Multiversal Action,Adventure,99,Ezra Miller,DC,14/06/2023
+The Flash,The Multiverse Action,Adventure,139,Ezra Miller,DC,14/06/2023
 Guardians of the Galaxy Vol. 3,Superheroes galore,Action and Adventure,130,Star Lord,Marvel,12/06/2023
-Captain America: The Winter Soldier, Reunion of old friends but superhero, Action, 130, Chris Evans, Marvel, 12/12/2012
-Iron Man,Superhero ,Action,130,Robert Downey Jr,Marvel,12/05/2014
+Captain America: The Winter Soldier, Reunion of old friends but superhero, Action, 150, Chris Evans, Marvel, 12/12/2012

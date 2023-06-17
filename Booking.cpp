@@ -55,7 +55,6 @@ void Booking::setPaymentType(string tempPaymentType) {
 }
 
 void Booking::book(WeeklySchedule* schedule, string startTime) {
-    setDateFromInput();
     int movieIndex = getMovieChoice(schedule);
     setMovie(movieIndex, schedule->getAvailableMovies());
     getBookingTime(movieIndex, startTime, schedule);
@@ -180,6 +179,7 @@ void Booking::setNumberOfTicketsFromInput() {
 
 
     }
+
 }
 
 void Booking::calculateTotalPrice() {
@@ -190,6 +190,7 @@ void Booking::calculateTotalPrice() {
             (getStudentPrice() * tempNumberOfTickets[3]);
 
     setTotalCost(total);
+    cout << "The total cost is: " << total << endl;
 
 }
 
@@ -265,7 +266,7 @@ int Booking::checkAndFixError() {
 
 }
 
-void Booking::setDateFromInput() {
+int Booking::setDateFromInput() {
     int temp;
     string days[7] = {
             "Thursday",
@@ -293,6 +294,7 @@ void Booking::setDateFromInput() {
 
     }
     setDate(days[temp-1]);
+    return temp;
 }
 
 void Booking::writeToFile(){

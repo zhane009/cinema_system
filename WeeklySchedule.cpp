@@ -269,6 +269,7 @@ Screen* WeeklySchedule::getScreens() {
 }
 
 void WeeklySchedule::readScreenFromFile() {
+    screens.clear();
     int tempID, tempSeats, tempMovie;
     string line, tempWord, tempType;
     int i = 0;

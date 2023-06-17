@@ -61,11 +61,11 @@ public:
 
     float getStudentPrice();
 
-    void book(WeeklySchedule* schedule, string = "10 : 15");
+    void book(WeeklySchedule*, string);
 
-    int getMovieChoice(WeeklySchedule* schedule);
+    int getMovieChoice(WeeklySchedule*);
 
-    void getBookingTime(int, string, WeeklySchedule* schedule);
+    void getBookingTime(int, string, WeeklySchedule*);
 
     void setNumberOfTicketsFromInput();
 
@@ -77,7 +77,7 @@ public:
 
     int checkAndFixError();
 
-    void setDateFromInput();
+    int setDateFromInput();
 
     void writeToFile();
 

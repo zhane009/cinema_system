@@ -137,7 +137,8 @@ bool Movie::checkDateFormat(string date) {
             int month = stoi(matches[2]);
             int year = stoi(matches[3]);
 
-            if (day >= 1 && day <= 31 && month >= 1 && month <= 12 && year >= 1000 && year <= 9999) {
+            if (day >= 1 && day <= 31 && month >= 1 && month <= 12 && year >= 1000 && year <= 9999) {\
+
                 if (month == 2 && day > 28) {
                     cout << "February only have 28 days" << endl;
                     return false;

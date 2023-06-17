@@ -1,3 +1,5 @@
 Spider-Man : Into the Spider Verse,Standard,Saturday,18 : 15,2,1,4,2,64.5,Cash
 Transformers: Rise of the Beasts,IMAX 3D,Sunday,13 : 25,1,1,1,1,28.5,Cash
 Avengers: Infinity War,Standard,Sunday,19 : 0,1,1,1,1,28.5,Cash
+Captain America: The Winter Soldier,IMAX 3D,Friday,18 : 0,1,1,1,1,28.5,Cash
+Spider-Man : Into the Spider Verse,Standard,Thursday,10 : 15,1,1,1,1,28.5,Cash
