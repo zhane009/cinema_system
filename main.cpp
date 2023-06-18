@@ -12,6 +12,7 @@ int main() {
 
     WeeklySchedule schedule, firstWeekThu, firstWeekFri, firstWeekSat, firstWeekSun, firstWeekMon, firstWeekTue, firstWeekWed;
     WeeklySchedule secondWeekThu, secondWeekFri, secondWeekSat, secondWeekSun, secondWeekMon, secondWeekTue, secondWeekWed;
+
     Booking booking;
     Movie movie;
     Screen screen;
@@ -56,7 +57,7 @@ int main() {
 
         else if (menuChoice == 2) {
             int weekChoice = schedule.getWeekChoice();
-            int day = booking.setDateFromInput();
+            int day = booking.setDateFromInput(weekChoice);
 
             if (weekChoice == 1){
                 if (day == 1){
@@ -110,7 +111,7 @@ int main() {
 
         else if (menuChoice == 3) {
             int weekChoice = schedule.getWeekChoice();
-            int day = booking.setDateFromInput();
+            int day = booking.setDateFromInput(weekChoice);
 
             if (weekChoice == 1){
                 if (day == 1){

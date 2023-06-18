@@ -205,14 +205,37 @@ void Booking::setPaymentTypeFromInput() {
     while(loop){
         tempInt = checkAndFixError();
         if (tempInt == 1){
+
             setPaymentType("Card");
-            int card, expDate, cvv;
-            cout << "what is your card number? :";
-            cin >> card;
-            cout << "what is the exp date?: ";
-            cin >> expDate;
+            string card, expDate, cvv;
+
+            cout << "what is your card number in xxxx-xxxx-xxxx-xxxx format? :";
+            int count = 0;
+            do {
+                cin.clear();
+                getline(cin, card);
+                if ( (count > 0) && (!(checkCard(card))) ){
+                    cout << "Your card doesnt match the format." << endl;
+                }
+                count ++;
+            } while( !(checkCard(card)) );
+
+            cout << "what is the exp date in mm/yy format?: ";
+            do {
+                getline(cin, expDate);
+                if ( !(checkExpDate(expDate)) ){
+                    cout << "Your exp date doesnt match the format." << endl;
+                }
+            } while( !(checkExpDate(expDate)) );
+
             cout << "what is the cvv?: ";
-            cin >> cvv;
+            do {
+                getline(cin, cvv);
+                if ( !(checkCVV(cvv)) ){
+                    cout << "Your cvv doesnt match the format." << endl;
+                }
+            } while( !(checkCVV(cvv)) );
+
             loop = false;
         }
 
@@ -237,7 +260,7 @@ void Booking::displayBookingInformation() {
             "Student x "
     };
 
-    cout << "You have made a booking: " << endl;
+    cout << "Y\n have made a booking: " << endl;
     cout << "For Movie: " << getMovie().getTitle() << endl;
     cout << "On Day: " << getDate() << endl;
     cout << "At Time: " << getTime() << endl;
@@ -266,7 +289,7 @@ int Booking::checkAndFixError() {
 
 }
 
-int Booking::setDateFromInput() {
+int Booking::setDateFromInput(int weekChoice) {
     int temp;
     string days[7] = {
             "Thursday",
@@ -283,15 +306,25 @@ int Booking::setDateFromInput() {
         cout << i + 1 << ". " << days[i] << endl;
     }
     cout << "Please choose a day: ";
-    while (loop){
-        temp = checkAndFixError();
-        if (temp > 7 || temp <= 0){
-            cout << "Please choose a valid option" << endl;
-        }
-        else {
-            loop = false;
-        }
+    if (weekChoice == 1){
+        do{
+            temp = checkAndFixError();
+            if (temp > 7 || temp <= 0){
+                cout << "Please choose a valid option" << endl;
+            }
 
+        } while ( !(checkDay(temp - 1)) );
+    }
+    else {
+        while (loop){
+            temp = checkAndFixError();
+            if (temp > 7 || temp <= 0){
+                cout << "Please choose a valid option" << endl;
+            }
+            else{
+                loop = false;
+            }
+        }
     }
     setDate(days[temp-1]);
     return temp;
@@ -392,4 +425,34 @@ void Booking::displayAllBookingsFromFile(){
     }
 }
 
+bool Booking::checkDay(int tempDay) {
+    time_t currentTime = std::time(nullptr);
+    tm* currentTm = std::localtime(&currentTime);
 
+    int currentDay = currentTm->tm_wday;
+
+    currentDay = (currentDay + 3) % 7;
+
+    if (tempDay >= currentDay) {
+        return true;
+    }
+    else {
+        cout << "Your inputted day is in the past. Please choose today or a day in the future." << endl;
+        return false;
+    }
+}
+
+bool Booking::checkCard(string tempCard) {
+    regex pattern(R"(\d{4}-\d{4}-\d{4}-\d{4})");
+    return regex_match(tempCard, pattern);
+}
+
+bool Booking::checkExpDate(string tempExpDate) {
+    regex pattern(R"([0-9]|1[0-2]/(?:2[3-9]|[3-9][0-9]))");
+    return regex_match(tempExpDate, pattern);
+}
+
+bool Booking::checkCVV(string tempCVV) {
+    regex pattern(R"(\d{3})");
+    return regex_match(tempCVV, pattern);
+}

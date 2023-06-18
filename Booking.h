@@ -6,7 +6,7 @@
 #include "WeeklySchedule.h"
 //#include "Movie.h"
 //#include "Screen.h"
-
+#include <ctime>
 
 using namespace std;
 
@@ -77,11 +77,19 @@ public:
 
     int checkAndFixError();
 
-    int setDateFromInput();
+    int setDateFromInput(int);
 
     void writeToFile();
 
     void displayAllBookingsFromFile();
+
+    bool checkDay(int);
+
+    bool checkCard(string);
+
+    bool checkExpDate(string);
+
+    bool checkCVV(string);
 };
 
 #endif //ASSESSMENT_BOOKING_H
