@@ -12,12 +12,15 @@ int main() {
 
     WeeklySchedule schedule, firstWeekThu, firstWeekFri, firstWeekSat, firstWeekSun, firstWeekMon, firstWeekTue, firstWeekWed;
     WeeklySchedule secondWeekThu, secondWeekFri, secondWeekSat, secondWeekSun, secondWeekMon, secondWeekTue, secondWeekWed;
+    WeeklySchedule thirdWeekThu, thirdWeekFri, thirdWeekSat, thirdWeekSun, thirdWeekMon, thirdWeekTue, thirdWeekWed;
+    WeeklySchedule fourthWeekThu, fourthWeekFri, fourthWeekSat, fourthWeekSun, fourthWeekMon, fourthWeekTue, fourthWeekWed;
 
     Booking booking;
     Movie movie;
     Screen screen;
 
     int menuChoice;
+
     string firstThuStartTime = "10 : 15";
     string firstFriStartTime = "10 : 15";
     string firstSatStartTime = "10 : 15";
@@ -32,6 +35,22 @@ int main() {
     string secondMonStartTime = "10 : 15";
     string secondTueStartTime = "10 : 15";
     string secondWedStartTime = "10 : 15";
+    string thirdThuStartTime = "10:15";
+    string thirdFriStartTime = "10:15";
+    string thirdSatStartTime = "10:15";
+    string thirdSunStartTime = "10:15";
+    string thirdMonStartTime = "10:15";
+    string thirdTueStartTime = "10:15";
+    string thirdWedStartTime = "10:15";
+    string fourthThuStartTime = "10:15";
+    string fourthFriStartTime = "10:15";
+    string fourthSatStartTime = "10:15";
+    string fourthSunStartTime = "10:15";
+    string fourthMonStartTime = "10:15";
+    string fourthTueStartTime = "10:15";
+    string fourthWedStartTime = "10:15";
+
+
 
     cout << "-------Welcome to the cinema--------" << endl;
     cout << "____________________________________" << endl;
@@ -39,7 +58,7 @@ int main() {
 
     while (true) {
 
-        cout << "\n1. Add movies to the schedule\n"
+        cout << "\n1. Add a movie to the schedule of a particular week\n"
              << "2. Edit starting time for a day\n"
              << "3. Make a booking\n"
              << "4. See all available movies\n"
@@ -51,7 +70,10 @@ int main() {
 
         if (menuChoice == 1) {
             int weekChoice = schedule.getWeekChoice();
-            schedule.writeToMovieFile(movie.getInput(), weekChoice);
+
+            if (schedule.canAddMovies(weekChoice)){
+                schedule.writeToMovieFile(movie.getInput(), weekChoice);
+            }
 
         }
 
@@ -107,6 +129,54 @@ int main() {
                 }
             }
 
+            else if (weekChoice == 3){
+                if (day == 1){
+                    thirdThuStartTime = schedule.editAvailableTimes();
+                }
+                else if (day == 2){
+                    thirdFriStartTime = schedule.editAvailableTimes();
+                }
+                else if (day == 3){
+                    thirdSatStartTime = schedule.editAvailableTimes();
+                }
+                else if (day == 4){
+                    thirdSunStartTime = schedule.editAvailableTimes();
+                }
+                else if (day == 5){
+                    thirdMonStartTime = schedule.editAvailableTimes();
+                }
+                else if (day == 6){
+                    thirdTueStartTime = schedule.editAvailableTimes();
+                }
+                else {
+                    thirdWedStartTime = schedule.editAvailableTimes();
+                }
+            }
+
+            else if (weekChoice == 4){
+                if (day == 1){
+                    fourthThuStartTime = schedule.editAvailableTimes();
+                }
+                else if (day == 2){
+                    fourthFriStartTime = schedule.editAvailableTimes();
+                }
+                else if (day == 3){
+                    fourthSatStartTime = schedule.editAvailableTimes();
+                }
+                else if (day == 4){
+                    fourthSunStartTime = schedule.editAvailableTimes();
+                }
+                else if (day == 5){
+                    fourthMonStartTime = schedule.editAvailableTimes();
+                }
+                else if (day == 6){
+                    fourthTueStartTime = schedule.editAvailableTimes();
+                }
+                else {
+                    fourthWedStartTime = schedule.editAvailableTimes();
+                }
+            }
+
         }
 
         else if (menuChoice == 3) {
@@ -117,37 +187,37 @@ int main() {
                 if (day == 1){
                     firstWeekThu.readMoviesFromFile(weekChoice);
                     firstWeekThu.readScreenFromFile();
-                    booking.book(&firstWeekThu, firstThuStartTime);
+                    booking.book(&firstWeekThu, firstThuStartTime, weekChoice);
                 }
                 else if (day == 2){
                     firstWeekFri.readMoviesFromFile(weekChoice);
                     firstWeekFri.readScreenFromFile();
-                    booking.book(&firstWeekFri, firstFriStartTime);
+                    booking.book(&firstWeekFri, firstFriStartTime, weekChoice);
                 }
                 else if (day == 3){
                     firstWeekSat.readMoviesFromFile(weekChoice);
                     firstWeekSat.readScreenFromFile();
-                    booking.book(&firstWeekSat, firstSatStartTime);
+                    booking.book(&firstWeekSat, firstSatStartTime, weekChoice);
                 }
                 else if (day == 4){
                     firstWeekSun.readMoviesFromFile(weekChoice);
                     firstWeekSun.readScreenFromFile();
-                    booking.book(&firstWeekSun, firstSunStartTime);
+                    booking.book(&firstWeekSun, firstSunStartTime, weekChoice);
                 }
                 else if (day == 5){
                     firstWeekMon.readMoviesFromFile(weekChoice);
                     firstWeekMon.readScreenFromFile();
-                    booking.book(&firstWeekMon, firstMonStartTime);
+                    booking.book(&firstWeekMon, firstMonStartTime, weekChoice);
                 }
                 else if (day == 6){
                     firstWeekTue.readMoviesFromFile(weekChoice);
                     firstWeekTue.readScreenFromFile();
-                    booking.book(&firstWeekTue, firstTueStartTime);
+                    booking.book(&firstWeekTue, firstTueStartTime, weekChoice);
                 }
                 else {
                     firstWeekWed.readMoviesFromFile(weekChoice);
                     firstWeekWed.readScreenFromFile();
-                    booking.book(&firstWeekWed, firstWedStartTime);
+                    booking.book(&firstWeekWed, firstWedStartTime, weekChoice);
                 }
             }
 
@@ -155,39 +225,115 @@ int main() {
                 if (day == 1){
                     secondWeekThu.readMoviesFromFile(weekChoice);
                     secondWeekThu.readScreenFromFile();
-                    booking.book(&secondWeekThu, secondThuStartTime);
+                    booking.book(&secondWeekThu, secondThuStartTime, weekChoice);
                 }
                 else if (day == 2){
                     secondWeekFri.readMoviesFromFile(weekChoice);
                     secondWeekFri.readScreenFromFile();
-                    booking.book(&secondWeekFri, secondFriStartTime);
+                    booking.book(&secondWeekFri, secondFriStartTime, weekChoice);
                 }
                 else if (day == 3){
                     secondWeekSat.readMoviesFromFile(weekChoice);
                     secondWeekSat.readScreenFromFile();
-                    booking.book(&secondWeekSat, secondSatStartTime);
+                    booking.book(&secondWeekSat, secondSatStartTime, weekChoice);
                 }
                 else if (day == 4){
                     secondWeekSun.readMoviesFromFile(weekChoice);
                     secondWeekSun.readScreenFromFile();
-                    booking.book(&secondWeekSun, secondSunStartTime);
+                    booking.book(&secondWeekSun, secondSunStartTime, weekChoice);
                 }
                 else if (day == 5){
                     secondWeekMon.readMoviesFromFile(weekChoice);
                     secondWeekMon.readScreenFromFile();
-                    booking.book(&secondWeekMon, secondMonStartTime);
+                    booking.book(&secondWeekMon, secondMonStartTime, weekChoice);
                 }
                 else if (day == 6){
                     secondWeekTue.readMoviesFromFile(weekChoice);
                     secondWeekTue.readScreenFromFile();
-                    booking.book(&secondWeekTue, secondTueStartTime);
+                    booking.book(&secondWeekTue, secondTueStartTime, weekChoice);
                 }
                 else {
                     secondWeekWed.readMoviesFromFile(weekChoice);
                     secondWeekWed.readScreenFromFile();
-                    booking.book(&secondWeekWed, secondWedStartTime);
+                    booking.book(&secondWeekWed, secondWedStartTime, weekChoice);
                 }
             }
+            else if (weekChoice == 3){
+                if (day == 1){
+                    thirdWeekThu.readMoviesFromFile(weekChoice);
+                    thirdWeekThu.readScreenFromFile();
+                    booking.book(&secondWeekThu, secondThuStartTime, weekChoice);
+                }
+                else if (day == 2){
+                    thirdWeekFri.readMoviesFromFile(weekChoice);
+                    thirdWeekFri.readScreenFromFile();
+                    booking.book(&secondWeekFri, secondFriStartTime, weekChoice);
+                }
+                else if (day == 3){
+                    thirdWeekSat.readMoviesFromFile(weekChoice);
+                    thirdWeekSat.readScreenFromFile();
+                    booking.book(&secondWeekSat, secondSatStartTime, weekChoice);
+                }
+                else if (day == 4){
+                    thirdWeekSun.readMoviesFromFile(weekChoice);
+                    thirdWeekSun.readScreenFromFile();
+                    booking.book(&secondWeekSun, secondSunStartTime, weekChoice);
+                }
+                else if (day == 5){
+                    thirdWeekMon.readMoviesFromFile(weekChoice);
+                    thirdWeekMon.readScreenFromFile();
+                    booking.book(&secondWeekMon, secondMonStartTime, weekChoice);
+                }
+                else if (day == 6){
+                    thirdWeekTue.readMoviesFromFile(weekChoice);
+                    thirdWeekTue.readScreenFromFile();
+                    booking.book(&secondWeekTue, secondTueStartTime, weekChoice);
+                }
+                else {
+                    thirdWeekWed.readMoviesFromFile(weekChoice);
+                    thirdWeekWed.readScreenFromFile();
+                    booking.book(&secondWeekWed, secondWedStartTime, weekChoice);
+                }
+            }
+
+            else if (weekChoice == 4){
+                if (day == 1){
+                    fourthWeekThu.readMoviesFromFile(weekChoice);
+                    fourthWeekThu.readScreenFromFile();
+                    booking.book(&secondWeekThu, secondThuStartTime, weekChoice);
+                }
+                else if (day == 2){
+                    fourthWeekFri.readMoviesFromFile(weekChoice);
+                    fourthWeekFri.readScreenFromFile();
+                    booking.book(&secondWeekFri, secondFriStartTime, weekChoice);
+                }
+                else if (day == 3){
+                    fourthWeekSat.readMoviesFromFile(weekChoice);
+                    fourthWeekSat.readScreenFromFile();
+                    booking.book(&secondWeekSat, secondSatStartTime, weekChoice);
+                }
+                else if (day == 4){
+                    fourthWeekSun.readMoviesFromFile(weekChoice);
+                    fourthWeekSun.readScreenFromFile();
+                    booking.book(&secondWeekSun, secondSunStartTime, weekChoice);
+                }
+                else if (day == 5){
+                    fourthWeekMon.readMoviesFromFile(weekChoice);
+                    fourthWeekMon.readScreenFromFile();
+                    booking.book(&secondWeekMon, secondMonStartTime, weekChoice);
+                }
+                else if (day == 6){
+                    fourthWeekTue.readMoviesFromFile(weekChoice);
+                    fourthWeekTue.readScreenFromFile();
+                    booking.book(&secondWeekTue, secondTueStartTime, weekChoice);
+                }
+                else {
+                    fourthWeekWed.readMoviesFromFile(weekChoice);
+                    fourthWeekWed.readScreenFromFile();
+                    booking.book(&secondWeekWed, secondWedStartTime, weekChoice);
+                }
+            }
+
         }
 
         else if (menuChoice == 4) {

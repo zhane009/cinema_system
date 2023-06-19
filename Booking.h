@@ -13,7 +13,8 @@ using namespace std;
 class Booking{
     int numberOfTickets[4];
     Movie movie;
-    string date;
+    string week;
+    string day;
     string time;
     double totalCost;
     string paymentType;
@@ -33,9 +34,13 @@ public:
 
     void setMovie (int, Movie*);
 
-    string getDate();
+    string getWeek();
 
-    void setDate(string);
+    void setWeek(int);
+
+    string getDay();
+
+    void satDay(string);
 
     string getTime();
 
@@ -61,7 +66,7 @@ public:
 
     float getStudentPrice();
 
-    void book(WeeklySchedule*, string);
+    void book(WeeklySchedule*, string, int);
 
     int getMovieChoice(WeeklySchedule*);
 

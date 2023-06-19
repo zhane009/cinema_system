@@ -2,3 +2,4 @@ Spider-Man : Into the Spider Verse,An animated masterpiece,Action and Adventure,
 The Flash,The Multiverse Action,Adventure,139,Ezra Miller,DC,14/06/2023
 Guardians of the Galaxy Vol. 3,Superheroes galore,Action and Adventure,130,Star Lord,Marvel,12/06/2023
 Captain America: The Winter Soldier, Reunion of old friends but superhero, Action, 150, Chris Evans, Marvel, 12/12/2012
+Kung Fu Panda,A panda learning kung fu to become the dragon warrior,Funny and Action,140,Po,DreamWorks,23/07/2010

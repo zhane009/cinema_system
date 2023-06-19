@@ -63,6 +63,7 @@ public:
 
     int getWeekChoice();
 
+    bool canAddMovies(int);
 };
 
 #endif //ASSESSMENT_WEEKLYSCHEDULE_H

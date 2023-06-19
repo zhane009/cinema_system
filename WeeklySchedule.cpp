@@ -18,11 +18,16 @@ void WeeklySchedule::readMoviesFromFile(int week) {
     ifstream MovieFile;
     if (week == 1){
         MovieFile.open("week1Movies.txt", ios::in);
-    } else {
+    }
+    else if (week == 2) {
         MovieFile.open("week2Movies.txt", ios::in);
     }
-
-//    MovieFile.open("week1Movies.txt", ios::in);
+    else if (week == 3){
+        MovieFile.open("week3Movies.txt", ios::in);
+    }
+    else {
+        MovieFile.open("week4Movies.txt", ios::in);
+    }
 
 
     if (MovieFile.is_open()){
@@ -73,17 +78,26 @@ void WeeklySchedule::readMoviesFromFile(int week) {
 }
 
 void WeeklySchedule::writeToMovieFile(Movie movie1, int week){
-        fstream MovieFile;
-        if (week == 1){
-            MovieFile.open("week1Movies.txt", ios::app);
-        }
-        else {
-            MovieFile.open("week2Movies.txt", ios::app);
-        }
-        MovieFile << movie1.getTitle() << "," << movie1.getDescription() << "," << movie1.getGenre()
-                  << "," << movie1.getRunningTimeInMinutes() << "," << movie1.getMainStar() << ","
-                  << movie1.getDistributor() << "," << movie1.getReleaseDate() << endl;
-        MovieFile.close();
+
+    fstream MovieFile;
+    if (week == 1){
+        MovieFile.open("week1Movies.txt", ios::app);
+    }
+    else if (week == 2){
+        MovieFile.open("week2Movies.txt", ios::app);
+    }
+    else if (week == 3){
+        MovieFile.open("week3Movies.txt", ios::app);
+    }
+    else {
+        MovieFile.open("week4Movies.txt", ios::app);
+    }
+    MovieFile << movie1.getTitle() << "," << movie1.getDescription() << "," << movie1.getGenre()
+              << "," << movie1.getRunningTimeInMinutes() << "," << movie1.getMainStar() << ","
+              << movie1.getDistributor() << "," << movie1.getReleaseDate() << endl;
+    MovieFile.close();
+    cout << "\nThe movie is added to your chosen week." << endl;
+
 }
 
 int WeeklySchedule::getMoviesSize() {
@@ -91,7 +105,7 @@ int WeeklySchedule::getMoviesSize() {
 }
 
 void WeeklySchedule::displayMovies() {
-    cout << "All available movies are : " << endl;
+    cout << "\nAll available movies are for the chosen week are : " << endl;
     for (int i = 0; i < availableMovies.size(); i++) {
         cout << "Title : " << availableMovies[i].getTitle() << endl;
         cout << "Description : " << availableMovies[i].getDescription() << endl;
@@ -238,8 +252,6 @@ int WeeklySchedule::getTimesSize() {
 }
 
 int WeeklySchedule::getMovieChoice() {
-//    WeeklySchedule schedule;
-//    schedule.readMoviesFromFile();
     int temp;
     Movie *ptr = getAvailableMovies();
     bool loop = true;
@@ -334,13 +346,15 @@ void WeeklySchedule::displayScreens(){
 int WeeklySchedule::getWeekChoice() {
     int weekChoice;
 
-    cout << "1. This week\n"
-         << "2. Next week\n"
+    cout << "\n1. This week\n"
+         << "2. Week 2\n"
+         << "3. Week 3\n"
+         << "4. Week 4\n"
          << "For which week?: ";
 
     while (true){
         weekChoice = checkAndFixError();
-        if (weekChoice <= 2 && weekChoice > 0){
+        if (weekChoice <= 4 && weekChoice > 0){
             break;
         }
         else {
@@ -350,5 +364,16 @@ int WeeklySchedule::getWeekChoice() {
     return weekChoice;
 }
 
+bool WeeklySchedule:: canAddMovies(int week){
+    readMoviesFromFile(week);
+    if (getMoviesSize() < 5){
+        cout << "\nYou can still add " << 5 - getMoviesSize() << " movies to this week\n" << endl;
+        return true;
+    }
+    else {
+        cout << "\nYou cannot add more to this week, it already has 5." << endl;
+        return false;
+    }
 
+}
 
