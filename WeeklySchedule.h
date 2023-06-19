@@ -47,7 +47,7 @@ public:
 
     void setTimeInAvailableTimes(string tempTime);
 
-    int getMovieChoice();
+//    int getMovieChoice();
 
     Screen* getScreens();
 
@@ -60,8 +60,6 @@ public:
     void displayScreens();
 
     int getScreenSize();
-
-    int getWeekChoice();
 
     bool canAddMovies(int);
 };

@@ -251,30 +251,30 @@ int WeeklySchedule::getTimesSize() {
     return availableTimes.size();
 }
 
-int WeeklySchedule::getMovieChoice() {
-    int temp;
-    Movie *ptr = getAvailableMovies();
-    bool loop = true;
-
-    for (int i = 0; i < getMoviesSize(); i++) {
-        cout << i + 1 << ". Title : " << ptr[i].getTitle() << endl;
-    }
-
-    cout << "Choose a number : ";
-
-    while (loop){
-        temp = checkAndFixError();
-
-        if (temp > getMoviesSize() || temp <= 0){
-            cout << "Please choose a valid option" << endl;
-        }
-
-        else {
-            loop = false;
-        }
-    }
-    return temp - 1;
-}
+//int WeeklySchedule::getMovieChoice() {
+//    int temp;
+//    Movie *ptr = getAvailableMovies();
+//    bool loop = true;
+//
+//    for (int i = 0; i < getMoviesSize(); i++) {
+//        cout << i + 1 << ". Title : " << ptr[i].getTitle() << endl;
+//    }
+//
+//    cout << "Choose a number : ";
+//
+//    while (loop){
+//        temp = checkAndFixError();
+//
+//        if (temp > getMoviesSize() || temp <= 0){
+//            cout << "Please choose a valid option" << endl;
+//        }
+//
+//        else {
+//            loop = false;
+//        }
+//    }
+//    return temp - 1;
+//}
 
 Screen* WeeklySchedule::getScreens() {
     return screens.data();
@@ -341,27 +341,6 @@ void WeeklySchedule::displayScreens(){
         ptr[i].getCurrentMovie().getTitle() << endl;
 
     }
-}
-
-int WeeklySchedule::getWeekChoice() {
-    int weekChoice;
-
-    cout << "\n1. This week\n"
-         << "2. Week 2\n"
-         << "3. Week 3\n"
-         << "4. Week 4\n"
-         << "For which week?: ";
-
-    while (true){
-        weekChoice = checkAndFixError();
-        if (weekChoice <= 4 && weekChoice > 0){
-            break;
-        }
-        else {
-            cout << "Please choose a valid option" << endl;
-        }
-    }
-    return weekChoice;
 }
 
 bool WeeklySchedule:: canAddMovies(int week){

@@ -68,6 +68,8 @@ public:
 
     void book(WeeklySchedule*, string, int);
 
+    int getWeekChoice();
+
     int getMovieChoice(WeeklySchedule*);
 
     void getBookingTime(int, string, WeeklySchedule*);

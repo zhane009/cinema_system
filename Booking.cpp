@@ -104,9 +104,28 @@ float Booking::getStudentPrice() {
     return studentPrice;
 }
 
+int Booking::getWeekChoice() {
+    int weekChoice;
+
+    cout << "\n1. This week\n"
+         << "2. Week 2\n"
+         << "3. Week 3\n"
+         << "4. Week 4\n"
+         << "For which week?: ";
+
+    while (true){
+        weekChoice = checkAndFixError();
+        if (weekChoice <= 4 && weekChoice > 0){
+            break;
+        }
+        else {
+            cout << "Please choose a valid option" << endl;
+        }
+    }
+    return weekChoice;
+}
+
 int Booking::getMovieChoice(WeeklySchedule* schedule) {
-//    WeeklySchedule schedule;
-//    schedule.readMoviesFromFile();
     int temp;
     Movie *ptr = schedule->getAvailableMovies();
     Screen *ptr2 = schedule->getScreens();
