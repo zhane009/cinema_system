@@ -122,7 +122,6 @@ int Movie::checkAndFixError() {
         cin.clear();
         cin.ignore(1000, '\n');
     }
-
     return temp;
 
 }

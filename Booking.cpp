@@ -152,6 +152,7 @@ int Booking::getMovieChoice(WeeklySchedule* schedule) {
 
     setMovie(temp-1, schedule->getAvailableMovies());
     setScreen(temp-1, schedule->getScreens());
+    cout << "\nThis screen has " << checkSeatAvailability() << " seats left" << endl;
     return temp - 1;
 }
 
@@ -195,23 +196,41 @@ void Booking::setNumberOfTicketsFromInput() {
 
     cout << endl;
 
+
+    bool loop = true;
+
     while (true){
+        int i = 0;
         int total = 0;
-        for (int i = 0; i < 4; ++i) {
+
+        while (loop) {
             cout << ques[i];
             tempNumber = checkAndFixError();
-            tempTickets[i] = tempNumber;
-            total += tempNumber;
+            if (tempNumber > 0){
+                tempTickets[i] = tempNumber;
+                total += tempNumber;
+                i++;
+                if (i == 4){
+                    loop = false;
+                }
+            }
+            else {
+                cout << "Number of tickets cannot be a negative number" << endl;
+
+            }
+
         }
 
-        if (screen.getNumberOfSeats() >= total){
+        if (checkSeatAvailability() >= total){
+            cout << "Your total is " << total << " tickets" << endl;
             setNumberOfTickets(tempTickets);
             break;
         }
 
         else  {
-            cout << "Your tickets exceed the maximum capacity of the screen. Its capacity is "
-                << screen.getNumberOfSeats() << ". Please try again."<< endl;
+            cout << "Your tickets exceed the remaining number of tickets of the screen. Its remaining capacity is "
+                << checkSeatAvailability() << ". Please try again."<< endl;
+            loop = true;
         }
 
 
@@ -262,7 +281,7 @@ void Booking::setPaymentTypeFromInput() {
             do {
                 getline(cin, expDate);
                 if ( !(checkExpDate(expDate)) ){
-                    cout << "Your exp day doesnt match the format." << endl;
+                    cout << "Your exp date doesnt match the format." << endl;
                 }
             } while( !(checkExpDate(expDate)) );
 
@@ -349,10 +368,15 @@ int Booking::setDateFromInput(int weekChoice) {
     cout << "Please choose a day: ";
     if (weekChoice == 1){
         do{
-            temp = checkAndFixError();
-            if (temp > 7 || temp <= 0){
-                cout << "Please choose a valid option" << endl;
-            }
+            do {
+                temp = checkAndFixError();
+                if (temp > 7 || temp <= 0){
+                    cout << "Please choose a valid option" << endl;
+                }
+                else {
+                    break;
+                }
+            } while (true);
 
         } while ( !(checkDay(temp - 1)) );
     }
@@ -499,4 +523,38 @@ bool Booking::checkExpDate(string tempExpDate) {
 bool Booking::checkCVV(string tempCVV) {
     regex pattern(R"(\d{3})");
     return regex_match(tempCVV, pattern);
+}
+
+int Booking::checkSeatAvailability() {
+    string tempLine, tempWord, tempScreen, tempMovie;
+    int tempTickets = 0;
+    fstream bookingFile;
+    bookingFile.open("Booking.txt", ios::in);
+
+    while (getline(bookingFile, tempLine)) {
+        stringstream stream(tempLine);
+        int counter = 0;
+
+        while (getline(stream >> ws, tempWord, ',')) {
+            if (counter == 0){
+                tempMovie = tempWord;
+
+            }
+            if (counter == 1){
+                tempScreen = tempWord;
+            }
+
+            if ((tempMovie == getMovie().getTitle()) && (tempScreen == getScreen().getScreenType())){
+                if (counter >= 5 && counter <= 8){
+                    tempTickets += stoi(tempWord);
+                }
+            }
+            counter ++;
+
+        }
+    }
+    int tempSeats = getScreen().getNumberOfSeats() - tempTickets;
+
+    return tempSeats;
+
 }

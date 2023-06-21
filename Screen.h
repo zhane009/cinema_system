@@ -34,6 +34,8 @@ public:
     string getScreenType();
 
     void setScreenType(string);
+
+    void displayScreen();
 };
 
 

@@ -47,8 +47,6 @@ public:
 
     void setTimeInAvailableTimes(string tempTime);
 
-//    int getMovieChoice();
-
     Screen* getScreens();
 
     void setScreenInScreens(Screen);

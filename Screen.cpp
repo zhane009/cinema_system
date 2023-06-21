@@ -45,3 +45,9 @@ void Screen::setScreenType(string tempScreenType) {
     screenType = tempScreenType;
 }
 
+void Screen::displayScreen() {
+    cout << "Screen ID: " << getScreenId() << endl;
+    cout << "Screen Type: " << getScreenType() << endl;
+    cout << "Current Movie: " << getCurrentMovie().getTitle() << endl;
+    cout << "Seat Capacity: " << getNumberOfSeats() << endl;
+}

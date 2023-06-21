@@ -97,6 +97,8 @@ public:
     bool checkExpDate(string);
 
     bool checkCVV(string);
+
+    int checkSeatAvailability();
 };
 
 #endif //ASSESSMENT_BOOKING_H

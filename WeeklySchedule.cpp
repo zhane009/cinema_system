@@ -29,7 +29,6 @@ void WeeklySchedule::readMoviesFromFile(int week) {
         MovieFile.open("week4Movies.txt", ios::in);
     }
 
-
     if (MovieFile.is_open()){
         while (getline(MovieFile, line)){
             stringstream movieString(line);
