@@ -152,7 +152,14 @@ void WeeklySchedule::setAvailableTimes(int movieIndex, string startTime) {
         }
         counter ++;
     }
-    string str = to_string(startHour) + " : " + to_string(startMinute);
+    string str;
+    if (startMinute < 10){
+        str = to_string(startHour) + " : 0" + to_string(startMinute);
+    }
+    else{
+        str = to_string(startHour) + " : " + to_string(startMinute);
+    }
+
     availableTimes.push_back(str);
 
 
@@ -179,7 +186,13 @@ void WeeklySchedule::setAvailableTimes(int movieIndex, string startTime) {
         } else{
             break;
         }
-        string str1 = to_string(startHour) + " : " + to_string(startMinute);
+        string str1;
+        if (startMinute < 10){
+            str1 = to_string(startHour) + " : 0" + to_string(startMinute);
+        }
+        else {
+            str1 = to_string(startHour) + " : " + to_string(startMinute);
+        }
         availableTimes.push_back(str1);
     }
 }

@@ -152,7 +152,7 @@ int Booking::getMovieChoice(WeeklySchedule* schedule) {
 
     setMovie(temp-1, schedule->getAvailableMovies());
     setScreen(temp-1, schedule->getScreens());
-    cout << "\nThis screen has " << checkSeatAvailability() << " seats left" << endl;
+//    cout << "\nThis screen has " << checkSeatAvailability() << " seats left" << endl;
     return temp - 1;
 }
 
@@ -206,7 +206,7 @@ void Booking::setNumberOfTicketsFromInput() {
         while (loop) {
             cout << ques[i];
             tempNumber = checkAndFixError();
-            if (tempNumber > 0){
+            if (tempNumber >= 0){
                 tempTickets[i] = tempNumber;
                 total += tempNumber;
                 i++;
@@ -526,7 +526,7 @@ bool Booking::checkCVV(string tempCVV) {
 }
 
 int Booking::checkSeatAvailability() {
-    string tempLine, tempWord, tempScreen, tempMovie, tempDay, tempWeek;
+    string tempLine, tempWord, tempScreen, tempMovie, tempDay, tempWeek, tempTime;
     int tempTickets = 0;
     fstream bookingFile;
     bookingFile.open("Booking.txt", ios::in);
@@ -552,8 +552,12 @@ int Booking::checkSeatAvailability() {
                 tempDay = tempWord;
             }
 
+            if (counter == 4){
+                tempTime = tempWord;
+            }
+
             if ((tempMovie == getMovie().getTitle()) && (tempScreen == getScreen().getScreenType())
-                && (tempDay == getDay()) && (tempWeek == getWeek())){
+                && (tempDay == getDay()) && (tempWeek == getWeek()) && (tempTime == getTime())){
 
                 if (counter >= 5 && counter <= 8){
                     tempTickets += stoi(tempWord);
