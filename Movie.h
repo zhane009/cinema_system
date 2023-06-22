@@ -1,6 +1,3 @@
-//
-// Created by ASUS on 05/06/2023.
-//
 
 #ifndef ASSESSMENT_MOVIE_H
 #define ASSESSMENT_MOVIE_H

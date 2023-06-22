@@ -1,7 +1,3 @@
-//
-// Created by ASUS on 05/06/2023.
-//
-
 #ifndef ASSESSMENT_WEEKLYSCHEDULE_H
 #define ASSESSMENT_WEEKLYSCHEDULE_H
 
@@ -52,8 +48,6 @@ public:
     void setScreenInScreens(Screen);
 
     void readScreenFromFile();
-
-    void writeToScreenFile();
 
     void displayScreens();
 

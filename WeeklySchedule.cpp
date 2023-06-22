@@ -250,31 +250,6 @@ int WeeklySchedule::getTimesSize() {
     return availableTimes.size();
 }
 
-//int WeeklySchedule::getMovieChoice() {
-//    int temp;
-//    Movie *ptr = getAvailableMovies();
-//    bool loop = true;
-//
-//    for (int i = 0; i < getMoviesSize(); i++) {
-//        cout << i + 1 << ". Title : " << ptr[i].getTitle() << endl;
-//    }
-//
-//    cout << "Choose a number : ";
-//
-//    while (loop){
-//        temp = checkAndFixError();
-//
-//        if (temp > getMoviesSize() || temp <= 0){
-//            cout << "Please choose a valid option" << endl;
-//        }
-//
-//        else {
-//            loop = false;
-//        }
-//    }
-//    return temp - 1;
-//}
-
 Screen* WeeklySchedule::getScreens() {
     return screens.data();
 }
@@ -354,4 +329,3 @@ bool WeeklySchedule:: canAddMovies(int week){
     }
 
 }
-

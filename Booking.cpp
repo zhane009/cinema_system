@@ -526,7 +526,7 @@ bool Booking::checkCVV(string tempCVV) {
 }
 
 int Booking::checkSeatAvailability() {
-    string tempLine, tempWord, tempScreen, tempMovie;
+    string tempLine, tempWord, tempScreen, tempMovie, tempDay, tempWeek;
     int tempTickets = 0;
     fstream bookingFile;
     bookingFile.open("Booking.txt", ios::in);
@@ -544,10 +544,21 @@ int Booking::checkSeatAvailability() {
                 tempScreen = tempWord;
             }
 
-            if ((tempMovie == getMovie().getTitle()) && (tempScreen == getScreen().getScreenType())){
+            if (counter == 2){
+                tempWeek = tempWord;
+            }
+
+            if (counter == 3){
+                tempDay = tempWord;
+            }
+
+            if ((tempMovie == getMovie().getTitle()) && (tempScreen == getScreen().getScreenType())
+                && (tempDay == getDay()) && (tempWeek == getWeek())){
+
                 if (counter >= 5 && counter <= 8){
                     tempTickets += stoi(tempWord);
                 }
+
             }
             counter ++;
 
