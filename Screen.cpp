@@ -13,6 +13,12 @@ Screen::Screen(int tempID, int tempSeats, Movie tempMovie, string tempType) {
     screenType  = tempType;
 }
 
+Screen::Screen(int tempID, int tempSeats, string tempType) {
+    screenId = tempID;
+    numberOfSeats = tempSeats;
+    screenType = tempType;
+}
+
 int Screen::getScreenId() {
     return screenId;
 }

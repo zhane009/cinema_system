@@ -47,13 +47,17 @@ public:
 
     void setScreenInScreens(Screen);
 
-    void readScreenFromFile();
+    void readScreenFromFile(int);
 
     void displayScreens();
 
     int getScreenSize();
 
     bool canAddMovies(int);
+
+    void displaySchedule();
+
+    void editMovieSetToScreen(int, int);
 };
 
 #endif //ASSESSMENT_WEEKLYSCHEDULE_H

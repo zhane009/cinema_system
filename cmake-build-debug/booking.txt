@@ -1,1 +1,4 @@
 The Flash,IMAX 2D,This week,Monday,13 : 0,1,5,3,1,63.5,Cash
+The Flash,IMAX 2D,This week,Monday,10 : 15,1,1,1,1,28.5,Cash
+The Flash,IMAX 2D,This week,Monday,10 : 15,1,1,1,1,28.5,Cash
+Spider-Man : Into the Spider Verse,Standard,This week,Wednesday,12 : 55,1,1,1,1,28.5,Cash

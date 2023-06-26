@@ -19,6 +19,8 @@ public:
 
     Screen(int, int, Movie, string);
 
+    Screen(int, int, string);
+
     int getScreenId();
 
     void setScreenId(int);

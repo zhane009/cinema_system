@@ -127,13 +127,25 @@ int Booking::getWeekChoice() {
 
 int Booking::getMovieChoice(WeeklySchedule* schedule) {
     int temp;
+    int k = 0;
     Movie *ptr = schedule->getAvailableMovies();
     Screen *ptr2 = schedule->getScreens();
     bool loop = true;
     cout << endl;
 
+//    for (int i = 0; i < schedule->getMoviesSize(); i++) {
+//        cout << i + 1 << ". Title : " << ptr[i].getTitle() << " at Screen: " << ptr2[i].getScreenType() << endl;
+//    }
+
     for (int i = 0; i < schedule->getMoviesSize(); i++) {
-        cout << i + 1 << ". Title : " << ptr[i].getTitle() << " at Screen: " << ptr2[i].getScreenType() << endl;
+        for (int j = 0; j < schedule->getScreenSize(); j++){
+
+            if (ptr[i].getTitle() == ptr2[j].getCurrentMovie().getTitle()){
+                k++;
+                cout << k << ". Title: " << ptr[i].getTitle() << " at Screen: " << ptr2[j].getScreenType() << endl;
+            }
+
+        }
     }
 
     cout << "Choose a number : ";
@@ -573,3 +585,5 @@ int Booking::checkSeatAvailability() {
     return tempSeats;
 
 }
+
+

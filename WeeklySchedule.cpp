@@ -267,18 +267,30 @@ Screen* WeeklySchedule::getScreens() {
     return screens.data();
 }
 
-void WeeklySchedule::readScreenFromFile() {
+void WeeklySchedule::readScreenFromFile(int weekChoice) {
     screens.clear();
+    readMoviesFromFile(weekChoice);
     int tempID, tempSeats, tempMovie;
     string line, tempWord, tempType;
     int i = 0;
 
     fstream ScreenFile;
-    ScreenFile.open("screens.txt");
+    if (weekChoice == 1){
+        ScreenFile.open("screens.txt");
+    }
+    else if (weekChoice == 2) {
+        ScreenFile.open("week2Screens.txt");
+    }
+    else if (weekChoice == 3) {
+        ScreenFile.open("week3Screens.txt");
+    }
+    else if (weekChoice == 4) {
+        ScreenFile.open("week4Screens.txt");
+    }
 
     if (ScreenFile.is_open()){
 
-        while (i < availableMovies.size() && getline(ScreenFile, line)){
+        while (getline(ScreenFile, line)){
             stringstream movieString(line);
             int counter = 0;
 
@@ -302,10 +314,17 @@ void WeeklySchedule::readScreenFromFile() {
                 counter++;
             }
 
-            Movie temp = availableMovies.at(tempMovie - 1);
+            if (tempMovie <= getMoviesSize()){
+                Movie temp = availableMovies.at(tempMovie - 1);
+                Screen* tempScreen = new Screen(tempID, tempSeats, temp, tempType);
+                setScreenInScreens(*tempScreen);
+            }
 
-            Screen* tempScreen = new Screen(tempID, tempSeats, temp, tempType);
-            setScreenInScreens(*tempScreen);
+            else {
+                Screen* tempScreen = new Screen(tempID, tempSeats, tempType);
+                setScreenInScreens(*tempScreen);
+            }
+
             i++;
         }
     }
@@ -340,5 +359,161 @@ bool WeeklySchedule:: canAddMovies(int week){
         cout << "\nYou cannot add more to this week, it already has 5." << endl;
         return false;
     }
+
+}
+
+void WeeklySchedule::displaySchedule() {
+    string* ptr = getAvailableTimes();
+
+    cout << "The schedule for this movie at this specific day is: " << endl;
+
+    for (int i = 0; i < getTimesSize(); i++){
+        cout << i+1 << ". " << ptr[i] << endl;
+    }
+}
+
+void WeeklySchedule::editMovieSetToScreen(int weekChoice, int movieIndex) {
+    fstream ReadFile;
+    ofstream WriteFile;
+    readMoviesFromFile(weekChoice);
+    readScreenFromFile(weekChoice);
+    string line, tempWord, tempType;
+    int tempMovieIndex, screenChoice, updatedScreenIndex, tempMovie, tempID, tempSeats;
+    Screen* tempScreens = getScreens();
+
+    int i = 0;
+
+    if (weekChoice == 1){
+        ReadFile.open("screens.txt", ios::in);
+    }
+    else if (weekChoice == 2) {
+        ReadFile.open("week2Screens.txt", ios::in);
+    }
+    else if (weekChoice == 3) {
+        ReadFile.open("week3Screens.txt", ios::in);
+    }
+    else if (weekChoice == 4) {
+        ReadFile.open("week4Screens.txt", ios::in);
+    }
+
+    vector<Screen> unsetScreens;
+
+    if (ReadFile.is_open()) {
+        while (getline(ReadFile, line)) {
+            stringstream movieString(line);
+            int counter = 0;
+
+            while (getline(movieString >> ws, tempWord, ',')) {
+
+                if (counter == 2) {
+                    tempMovieIndex = stoi(tempWord);
+                }
+                counter++;
+            }
+            if (tempMovieIndex > getMoviesSize()){
+                unsetScreens.push_back(tempScreens[i]);
+            }
+            i++;
+
+        }
+        ReadFile.close();
+    }
+    cout << "These are the unused screens for this week: " << endl;
+    for (int j = 0; j < unsetScreens.size(); j++){
+        cout << j + 1 << ". " << unsetScreens[j].getScreenType() << endl;
+    }
+    cout << "Choose one that you would like to display the movie on: ";
+    screenChoice = checkAndFixError();
+
+    for (int j = 0; j < getScreenSize(); j++){
+        if (tempScreens[j].getScreenId() == unsetScreens[screenChoice - 1].getScreenId()){
+            updatedScreenIndex = j;
+        }
+    }
+
+    if (weekChoice == 1){
+        ReadFile.open("screens.txt", ios::in);
+    }
+    else if (weekChoice == 2) {
+        ReadFile.open("week2Screens.txt", ios::in);
+    }
+    else if (weekChoice == 3) {
+        ReadFile.open("week3Screens.txt", ios::in);
+    }
+    else if (weekChoice == 4) {
+        ReadFile.open("week4Screens.txt", ios::in);
+    }
+
+    vector<string> toWrite;
+
+    if (ReadFile.is_open()){
+        while (getline(ReadFile, line)) {
+            stringstream movieString(line);
+            int counter = 0;
+
+
+            while (getline(movieString >> ws, tempWord, ',')) {
+                if (counter == 0){
+                    tempID = stoi(tempWord);
+                }
+
+                else if (counter == 1){
+                    tempSeats = stoi(tempWord);
+                }
+
+                else if (counter == 2){
+                    tempMovie = stoi(tempWord);
+                }
+
+                else if (counter == 3){
+                    tempType = tempWord;
+                }
+
+                if (tempMovie == movieIndex + 1) {
+                    tempMovie = updatedScreenIndex + 1;
+                }
+
+                if (updatedScreenIndex + 1 == tempID){
+                    tempMovie = movieIndex + 1;
+                }
+                counter ++;
+            }
+
+
+
+            string str = to_string(tempID) + "," + to_string(tempSeats) + ","
+                         + to_string(tempMovie) + "," + tempType;
+
+            toWrite.push_back(str);
+
+        }
+        ReadFile.close();
+    }
+
+    for (int j = 0; j < toWrite.size(); j++) {
+        cout << toWrite[j] << endl;
+
+    }
+
+    if (weekChoice == 1){
+        WriteFile.open("screens.txt", ios::trunc);
+    }
+    else if (weekChoice == 2) {
+        WriteFile.open("week2Screens.txt", ios::trunc);
+    }
+    else if (weekChoice == 3) {
+        WriteFile.open("week3Screens.txt", ios::trunc);
+    }
+    else if (weekChoice == 4) {
+        WriteFile.open("week4Screens.txt", ios::trunc);
+    }
+
+    if (WriteFile.is_open()){
+        for (int j = 0; j < toWrite.size(); j ++) {
+            WriteFile << toWrite[j] << endl;
+        }
+        WriteFile.close();
+    }
+
 
 }
