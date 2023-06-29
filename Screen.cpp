@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//constructors
 Screen::Screen() {
 
 }
@@ -19,6 +20,7 @@ Screen::Screen(int tempID, int tempSeats, string tempType) {
     screenType = tempType;
 }
 
+//getters and setters
 int Screen::getScreenId() {
     return screenId;
 }
@@ -51,6 +53,7 @@ void Screen::setScreenType(string tempScreenType) {
     screenType = tempScreenType;
 }
 
+// the function that will display the screen details
 void Screen::displayScreen() {
     cout << "Screen ID: " << getScreenId() << endl;
     cout << "Screen Type: " << getScreenType() << endl;

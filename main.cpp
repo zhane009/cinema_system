@@ -10,6 +10,7 @@ using namespace std;
 
 int main() {
 
+    //declare necessary instances
     WeeklySchedule schedule;
     Booking booking;
     Movie movie;
@@ -17,6 +18,7 @@ int main() {
 
     int menuChoice;
 
+    //declare the starting times for all available days
     string firstThuStartTime = "10 : 15";
     string firstFriStartTime = "10 : 15";
     string firstSatStartTime = "10 : 15";
@@ -61,15 +63,17 @@ int main() {
              << "8. Exit\n"
              << "What would you like to do? : ";
 
+        //ask the user to choose
         menuChoice = schedule.checkAndFixError();
 
 
         if (menuChoice == 1) {
             int weekChoice = booking.getWeekChoice();
             int day = booking.setDateFromInput(weekChoice);
-            schedule.readMoviesFromFile(weekChoice);
+            schedule.readMoviesFromFile(weekChoice);//read the file according to the week choice
             schedule.readScreenFromFile(weekChoice);
 
+            //book on based on the week and day choice
             if (weekChoice == 1){
                 if (day == 1){
                     booking.book(&schedule, firstThuStartTime, weekChoice);
@@ -173,6 +177,7 @@ int main() {
             schedule.readMoviesFromFile(weekChoice);
             schedule.readScreenFromFile(weekChoice);
 
+            //display schedule based on week, day and movie choice
             if (weekChoice == 1){
                 if (day == 1){
                     int index = booking.getMovieChoice(&schedule);
@@ -328,7 +333,9 @@ int main() {
         else if (menuChoice == 3) {
             int weekChoice = booking.getWeekChoice();
 
+            // if there is space
             if (schedule.canAddMovies(weekChoice)){
+                //ask for input and write to the file
                 schedule.writeToMovieFile(movie.getInput(), weekChoice);
             }
 
@@ -338,6 +345,7 @@ int main() {
             int weekChoice = booking.getWeekChoice();
             int day = booking.setDateFromInput(weekChoice);
 
+            //set the starting times for chosen the day in the chosen week
             if (weekChoice == 1){
                 if (day == 1){
                     firstThuStartTime = schedule.editAvailableTimes();
@@ -439,12 +447,14 @@ int main() {
         else if (menuChoice == 5) {
             int weekChoice = booking.getWeekChoice();
 
+            //display all available movies based on the chosen week
             schedule.readMoviesFromFile(weekChoice);
 
             schedule.displayMovies();
         }
 
         else if (menuChoice == 6) {
+            //read and display all bookings from the file
             booking.displayAllBookingsFromFile();
         }
 
@@ -452,19 +462,23 @@ int main() {
             int week = booking.getWeekChoice();
             schedule.readMoviesFromFile(week);
             schedule.readScreenFromFile(week);
+            //if there are 5 movies already, do not let the user edit
             if (schedule.getMoviesSize() > 4) {
                 cout << "You cannot edit for this week anymore. It is already filled." << endl;
             }
             else{
+                //perform the edit process based on the week choice
                 schedule.editMovieSetToScreen(week, booking.getMovieChoice(&schedule));
             }
         }
 
         else if (menuChoice == 8){
+            //if the user chooses 8, exit
             break;
         }
 
         else {
+            //if the user chooses an invalid option, repeat and ask again
             cout << "Please choose a valid option" << endl;
         }
 

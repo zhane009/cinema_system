@@ -8,10 +8,10 @@
 using namespace std;
 
 class Screen{
-    int screenId;
-    int numberOfSeats;
-    Movie currentMovie;
-    string screenType;
+    int screenId;   // the id of the screen
+    int numberOfSeats;  // the capacity of the screen
+    Movie currentMovie; // the current movie on the screen
+    string screenType;  // the facility of the screen, i.e. IMAX or 3D or Premium
 
 public:
 

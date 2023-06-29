@@ -9,13 +9,13 @@
 using namespace std;
 
 class Movie{
-    string title;
-    string description;
-    string genre;
-    int runningTimeInMinutes;
-    string mainStar;
-    string distributor;
-    string releaseDate;
+    string title;   // the title of the movie
+    string description; // the description of the movie
+    string genre;   // the genre of the movie
+    int runningTimeInMinutes;   // the running time of the movie in minutes
+    string mainStar;    // the main star of the movie
+    string distributor; // the distributor of the movie
+    string releaseDate; // the release date of the movie
 
 public:
     Movie();

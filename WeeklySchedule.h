@@ -12,9 +12,9 @@ using namespace std;
 
 class WeeklySchedule {
 private:
-    vector<Screen> screens;
-    vector<Movie> availableMovies;
-    vector<string> availableTimes;
+    vector<Screen> screens; // the vector of all screens
+    vector<Movie> availableMovies;  // the vector of all movies in a week
+    vector<string> availableTimes;  // the vector of all show times for a movie
 
 public:
     Movie* getAvailableMovies();

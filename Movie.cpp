@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//constructors
 Movie::Movie() {};
 
 Movie::Movie(string tempTitle, string tempDescription, string tempGenre, int tempRuntime, string tempMainStar, string tempDistributor, string tempReleaseDate) {
@@ -14,6 +15,7 @@ Movie::Movie(string tempTitle, string tempDescription, string tempGenre, int tem
     releaseDate = tempReleaseDate;
 }
 
+//getters and setters
 string Movie::getTitle() {
     return title;
 }
@@ -70,13 +72,16 @@ void Movie::setReleaseDate(string tempReleaseDate) {
     releaseDate = tempReleaseDate;
 }
 
+// the function that will ask the user for input and return a movie object
 Movie Movie::getInput() {
 
-    cin.clear();
+    cin.clear();    // clear the buffer for unwanted errors
     cin.ignore();
     Movie movie;
     string input;
     int temp;
+
+    //ask for each value and set each value
     cout << "Movie Title: ";
     getline(cin, input);
     movie.setTitle(input);
@@ -111,10 +116,11 @@ Movie Movie::getInput() {
     while (!checkDateFormat(input));
     movie.setReleaseDate(input);
 
-    return movie;
+    return movie;   //return the object made
 
 }
 
+// the function that will check if the user has entered an integer
 int Movie::checkAndFixError() {
     int temp;
     while (!(cin >> temp)){
@@ -126,22 +132,27 @@ int Movie::checkAndFixError() {
 
 }
 
+// the function that will check the date format
 bool Movie::checkDateFormat(string date) {
-
+        //regular expression for dd/mm/yyyy
         regex pattern(R"((\d{2})/(\d{2})/(\d{4}))");
         smatch matches;
 
+        // if the pattern matches
         if (regex_match(date, matches, pattern)) {
-            int day = stoi(matches[1]);
-            int month = stoi(matches[2]);
-            int year = stoi(matches[3]);
+            int day = stoi(matches[1]);     // the first one is the day
+            int month = stoi(matches[2]);      // the second one is the month
+            int year = stoi(matches[3]);    // the third one is the year
 
+            // check necessary constraints for day and months
             if (day >= 1 && day <= 31 && month >= 1 && month <= 12 && year >= 1000 && year <= 9999) {\
 
+                //February has only 28 days
                 if (month == 2 && day > 28) {
                     cout << "February only have 28 days" << endl;
                     return false;
                 }
+                // months with only 30 days
                 if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30){
                     cout << "That month only has 30 days" << endl;
                     return false;

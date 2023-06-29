@@ -11,15 +11,17 @@
 using namespace std;
 
 class Booking{
-    int numberOfTickets[4];
-    Movie movie;
-    string week;
-    string day;
-    string time;
-    double totalCost;
-    string paymentType;
-    Screen screen;
+    //declare all variables
+    int numberOfTickets[4]; //the quantities of four types of tickets
+    Movie movie; // the chosen movie by the user
+    string week; // the chosen week by the user
+    string day; // the chosen day by the user
+    string time; // the chosen time by the user
+    double totalCost; // the total cost of the transaction
+    string paymentType; //the payment type chosen by the user
+    Screen screen; // the screen chosen by the user
 
+    //constant values for the prices as they cannot be edited
     const float adultPrice = 9.5;
     const float childPrice = 5.5;
     const float seniorPrice = 6.5;
