@@ -164,7 +164,7 @@ void WeeklySchedule::setAvailableTimes(int movieIndex, string startTime) {
 
 
     while (true){
-        if ((startHour + hour) < 21){
+        if ((startHour + hour) < 20){
             if ((startMinute + minute + 25) < 60){
                 startHour += hour;
                 startMinute += minute + 25;
@@ -379,6 +379,7 @@ void WeeklySchedule::editMovieSetToScreen(int weekChoice, int movieIndex) {
     readScreenFromFile(weekChoice);
     string line, tempWord, tempType;
     int tempMovieIndex, screenChoice, updatedScreenIndex, tempMovie, tempID, tempSeats;
+    int replacedMovie = 0;
     Screen* tempScreens = getScreens();
 
     int i = 0;
@@ -457,6 +458,44 @@ void WeeklySchedule::editMovieSetToScreen(int weekChoice, int movieIndex) {
                     tempID = stoi(tempWord);
                 }
 
+                else if (counter == 2){
+                    tempMovie = stoi(tempWord);
+                }
+
+                if (tempID == tempScreens[updatedScreenIndex].getScreenId()){
+                    replacedMovie = tempMovie;
+                }
+                counter ++;
+            }
+
+        }
+        ReadFile.close();
+    }
+
+    if (weekChoice == 1){
+        ReadFile.open("screens.txt", ios::in);
+    }
+    else if (weekChoice == 2) {
+        ReadFile.open("week2Screens.txt", ios::in);
+    }
+    else if (weekChoice == 3) {
+        ReadFile.open("week3Screens.txt", ios::in);
+    }
+    else if (weekChoice == 4) {
+        ReadFile.open("week4Screens.txt", ios::in);
+    }
+
+    if (ReadFile.is_open()){
+        while (getline(ReadFile, line)) {
+            stringstream movieString(line);
+            int counter = 0;
+
+
+            while (getline(movieString >> ws, tempWord, ',')) {
+                if (counter == 0){
+                    tempID = stoi(tempWord);
+                }
+
                 else if (counter == 1){
                     tempSeats = stoi(tempWord);
                 }
@@ -469,14 +508,14 @@ void WeeklySchedule::editMovieSetToScreen(int weekChoice, int movieIndex) {
                     tempType = tempWord;
                 }
 
-                if (tempMovie == movieIndex + 1) {
-                    tempMovie = updatedScreenIndex + 1;
-                }
-
-                if (updatedScreenIndex + 1 == tempID){
-                    tempMovie = movieIndex + 1;
-                }
                 counter ++;
+            }
+
+            if (tempMovie == movieIndex + 1 && replacedMovie != 0) {
+                tempMovie = replacedMovie;
+            }
+            if (updatedScreenIndex + 1 == tempID){
+                tempMovie = movieIndex + 1;
             }
 
 
@@ -490,10 +529,11 @@ void WeeklySchedule::editMovieSetToScreen(int weekChoice, int movieIndex) {
         ReadFile.close();
     }
 
-    for (int j = 0; j < toWrite.size(); j++) {
-        cout << toWrite[j] << endl;
 
-    }
+//    for (int j = 0; j < toWrite.size(); j++) {
+//        cout << toWrite[j] << endl;
+//
+//    }
 
     if (weekChoice == 1){
         WriteFile.open("screens.txt", ios::trunc);
@@ -514,6 +554,8 @@ void WeeklySchedule::editMovieSetToScreen(int weekChoice, int movieIndex) {
         }
         WriteFile.close();
     }
+
+    cout << "\nYour chosen movie has been reallocated to " << tempScreens[updatedScreenIndex].getScreenType() << endl;
 
 
 }

@@ -1,3 +1,4 @@
+#include <iomanip>
 #include "Booking.h"
 
 using namespace std;
@@ -258,7 +259,7 @@ void Booking::calculateTotalPrice() {
             (getStudentPrice() * tempNumberOfTickets[3]);
 
     setTotalCost(total);
-    cout << "The total cost is: " << total << endl;
+    cout << "The total cost is: " << setprecision(2) << fixed << total << "GBP" << endl;
 
 }
 
@@ -344,7 +345,7 @@ void Booking::displayBookingInformation() {
         }
     }
 
-    cout << "And The Total Cost is: " << getTotalCost() << endl;
+    cout << "And The Total Cost is: " << setprecision(2) << fixed << getTotalCost() << "GBP" << endl;
     cout << "Which was paid by: " << getPaymentType() << endl;
 }
 

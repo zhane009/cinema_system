@@ -1,5 +1,5 @@
-Spider-Man : Into the Spider Verse,An animated masterpiece,Action and Adventure,134,Miles Morales,Sony,04/06/2023
-The Flash,The Multiverse Action,Adventure,139,Ezra Miller,DC,14/06/2023
-Guardians of the Galaxy Vol. 3,Superheroes galore,Action and Adventure,130,Star Lord,Marvel,12/06/2023
-Kung Fu Panda,A panda learning kung fu to become the dragon warrior,Funny and Action,140,Po,DreamWorks,23/07/2010
-Captain America: The Winter Soldier, Reunion of old friends but superhero, Action, 150, Chris Evans, Marvel, 12/12/2012
+Batman: The Dark Knight,When the menace known as the Joker wreaks havoc and chaos on the people of Gotham Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.,Action/Crime/Drama,152,DC,14/07/2008
+Spider-Man : Across the Spider Verse,Miles Morales catapults across the Multiverse where he encounters a team of Spider-People charged with protecting its very existence. When the heroes clash on how to handle a new threat Miles must redefine what it means to be a hero.,Action / Adventure / Animation,140,Shameik Moore,Sony,01/06/2023
+Captain America: The Winter Soldier,As Steve Rogers struggles to embrace his role in the modern world he teams up with a fellow Avenger and S.H.I.E.L.D agent Black Widow to battle a new threat from history: an assassin known as the Winter Soldier.,Action/Adventure/Sci-Fi,136,Chris Evans,Marvel,13/03/2014
+The Flash,Barry Allen uses his super speed to change the past but his attempt to save his family creates a world without superheroes forcing him to race for his life in order to save the future.,Adventure/Action/Fantasy,144,Ezra Miller,DC,14/06/2023
+Harry Potter and the Sorcerer's Stone, An orphaned boy enrolls in a school of wizardry where he learns the truth about himself his family and the terrible evil that haunts the magical world.,Adventure/Family/Fantasy,152,Daniel Radcliffe,Warner Bros,04/11/2001

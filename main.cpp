@@ -10,11 +10,7 @@ using namespace std;
 
 int main() {
 
-    WeeklySchedule schedule, firstWeekThu, firstWeekFri, firstWeekSat, firstWeekSun, firstWeekMon, firstWeekTue, firstWeekWed;
-    WeeklySchedule secondWeekThu, secondWeekFri, secondWeekSat, secondWeekSun, secondWeekMon, secondWeekTue, secondWeekWed;
-    WeeklySchedule thirdWeekThu, thirdWeekFri, thirdWeekSat, thirdWeekSun, thirdWeekMon, thirdWeekTue, thirdWeekWed;
-    WeeklySchedule fourthWeekThu, fourthWeekFri, fourthWeekSat, fourthWeekSun, fourthWeekMon, fourthWeekTue, fourthWeekWed;
-
+    WeeklySchedule schedule;
     Booking booking;
     Movie movie;
     Screen screen;
@@ -473,6 +469,5 @@ int main() {
         }
 
     }
-
     return 0;
 }
