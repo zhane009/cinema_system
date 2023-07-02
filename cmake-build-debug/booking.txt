@@ -1,5 +1,0 @@
-Harry Potter and the Sorcerer's Stone,Premium,This week,Saturday,19 : 15,1,1,1,1,28.5,Cash
-The Flash,IMAX 3D,This week,Saturday,19 : 30,1,1,1,1,28.5,Cash
-Captain America: The Winter Soldier,3D,This week,Friday,15 : 45,1,1,1,1,28.5,Cash
-Avatar,Standard,Week 4,Saturday,16 : 35,1,1,1,1,28.5,Cash
-Harry Potter and the Sorcerer's Stone,Premium,This week,Saturday,19 : 15,1,1,1,1,28.5,Cash

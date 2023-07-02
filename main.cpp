@@ -55,9 +55,9 @@ int main() {
 
         cout << "\n1. Make a booking\n"
              << "2. View the schedule of a movie at a particular day\n"
-             << "3. Add a movie to the schedule of a particular week\n"
+             << "3. See all available movies\n"
              << "4. Edit starting time for a day\n"
-             << "5. See all available movies\n"
+             << "5. Add a movie to the schedule of a particular week\n"
              << "6. See all Bookings\n"
              << "7. Edit screen allocation for a movie\n"
              << "8. Exit\n"
@@ -67,13 +67,14 @@ int main() {
         menuChoice = schedule.checkAndFixError();
 
 
-        if (menuChoice == 1) {
+        if (menuChoice == 1) { // making a booking process
             int weekChoice = booking.getWeekChoice();
             int day = booking.setDateFromInput(weekChoice);
             schedule.readMoviesFromFile(weekChoice);//read the file according to the week choice
             schedule.readScreenFromFile(weekChoice);
 
             //book on based on the week and day choice
+            //different based on the day and the week
             if (weekChoice == 1){
                 if (day == 1){
                     booking.book(&schedule, firstThuStartTime, weekChoice);
@@ -171,7 +172,7 @@ int main() {
 
         }
 
-        else if (menuChoice == 2) {
+        else if (menuChoice == 2) { // display schedule process
             int weekChoice = booking.getWeekChoice();
             int day = booking.setDateFromInput(weekChoice);
             schedule.readMoviesFromFile(weekChoice);
@@ -330,18 +331,17 @@ int main() {
             }
 
         }
-        else if (menuChoice == 3) {
+        else if (menuChoice == 3) { //show all available movies for a week process
             int weekChoice = booking.getWeekChoice();
 
-            // if there is space
-            if (schedule.canAddMovies(weekChoice)){
-                //ask for input and write to the file
-                schedule.writeToMovieFile(movie.getInput(), weekChoice);
-            }
+            //display all available movies based on the chosen week
+            schedule.readMoviesFromFile(weekChoice);
 
+            schedule.displayMovies();
         }
 
-        else if (menuChoice == 4) {
+
+        else if (menuChoice == 4) { // edit the starting time process
             int weekChoice = booking.getWeekChoice();
             int day = booking.setDateFromInput(weekChoice);
 
@@ -444,21 +444,23 @@ int main() {
 
         }
 
-        else if (menuChoice == 5) {
+        else if (menuChoice == 5) { // add movie to a week process
             int weekChoice = booking.getWeekChoice();
 
-            //display all available movies based on the chosen week
-            schedule.readMoviesFromFile(weekChoice);
+            // if there is space
+            if (schedule.canAddMovies(weekChoice)){
+                //ask for input and write to the file
+                schedule.writeToMovieFile(movie.getInput(), weekChoice);
+            }
 
-            schedule.displayMovies();
         }
 
-        else if (menuChoice == 6) {
+        else if (menuChoice == 6) { // display all bookings process
             //read and display all bookings from the file
             booking.displayAllBookingsFromFile();
         }
 
-        else if (menuChoice == 7){
+        else if (menuChoice == 7){ // reallocating a movie process
             int week = booking.getWeekChoice();
             schedule.readMoviesFromFile(week);
             schedule.readScreenFromFile(week);

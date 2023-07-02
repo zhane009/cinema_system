@@ -167,15 +167,29 @@ void WeeklySchedule::displayMovies() {
 
 // the function that will check if the user has entered an integer value
 int WeeklySchedule::checkAndFixError() {
-    int temp;
+
+    float temp;
     while (!(cin >> temp)){
+
         cout << "Invalid Input. Please type in only an integer." << endl;
         cin.clear();
         cin.ignore(1000, '\n');
     }
 
-    return temp;
+    while (int(temp * 10) % 10  != 0){
+        if ( int(temp * 10) % 10  == 0) {
+            return int(temp);
+            break;
+        }
+        else {
+            cout << "Invalid Input. Please type in only an integer." << endl;
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cin >> temp;
+        }
+    }
 
+    return temp;
 }
 
 // the function that will calculate the showtimes based on the runtime of the movie and populate the vector
@@ -567,7 +581,7 @@ void WeeklySchedule::editMovieSetToScreen(int weekChoice, int movieIndex) {
                 counter ++;
             }
 
-
+            // this will swap the movie indexes of the updated screen and the previously allocated screen
             // if the movie index of the screen is the same as the one from the parameters
             if (tempMovie == movieIndex + 1 && replacedMovie != 0) {
                 tempMovie = replacedMovie;  // replace that index with the one from updated screen

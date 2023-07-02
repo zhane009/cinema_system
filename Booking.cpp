@@ -209,12 +209,18 @@ void Booking::setNumberOfTicketsFromInput() {
     string ques[4] = {
             "Adult Tickets: ",
             "Child Tickets: ",
-            "Senior Tickets: ",
+            "Senior Citizen Tickets: ",
             "Student Tickets: "
     };
 
-    cout << endl;
+    cout << "\nThe Prices are:" << endl;
 
+    cout << "Price for one ticket per an adult: "  << setprecision(2) << fixed << getAdultPrice() << "GBP" << endl;
+    cout << "Price for one ticket per a child: " << setprecision(2) << fixed << getChildPrice() << "GBP" << endl;
+    cout << "Price for one ticket per a senior citizen: " << setprecision(2) << fixed << getSeniorPrice() << "GBP" << endl;
+    cout << "Price for one ticket per a student: " << setprecision(2) << fixed << getStudentPrice() << "GBP" << endl;
+
+    cout << endl;
 
     bool loop = true;
 
@@ -292,6 +298,7 @@ void Booking::setPaymentTypeFromInput() {
 
             // ask for card details
             cout << endl;
+            cin.clear();
             cout << "what is your card number in xxxx-xxxx-xxxx-xxxx format? :";
 
             do {
@@ -371,15 +378,28 @@ void Booking::displayBookingInformation() {
 
 // the function that will check if a user enters an integer and return the value
 int Booking::checkAndFixError() {
-    int temp;
-    while (!(cin >> temp)){ // if the input is not an integer and loop until it is one
-        cout << "Invalid Input. Please type in only an integer." << endl; // print the error message
-        cin.clear();    //clear the buffer
-        cin.ignore(1000, '\n');  //ignore all
+    float temp;
+    while (!(cin >> temp)){ // check if the type of the input is integer
+
+        cout << "Invalid Input. Please type in only an integer." << endl;
+        cin.clear();
+        cin.ignore(1000, '\n');
     }
 
-    return temp;    // return the inputted integer
+    while (int(temp * 10) % 10  != 0){  // check if it is a float
+        if ( int(temp * 10) % 10  == 0) {
+            return int(temp);
+            break;
+        }
+        else {
+            cout << "Invalid Input. Please type in only an integer." << endl;
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cin >> temp;
+        }
+    }
 
+    return temp;
 }
 
 // the function that will ask the user for day choice
@@ -580,7 +600,8 @@ bool Booking::checkExpDate(string tempExpDate) {
     // if the first digit of the month is zero, the second one is between 1 and 9
     // if the first digit of the month is 1, the second one is between 0 and 2
     // the year cannot be less than 23
-    regex pattern(R"((?:0[1-9]|1[0-2])/(?:2[3-9]|[3-9][0-9]))");
+    // if the year is 23, the month cannot be less than 7 which is July
+    regex pattern(R"((?:0[7-9]|1[0-2])/(?:23)|(?:0[1-9]|1[0-2])/(?:2[4-9]|[3-9][0-9]))");
     return regex_match(tempExpDate, pattern); // return true if matches
 }
 
