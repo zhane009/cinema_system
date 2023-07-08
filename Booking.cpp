@@ -298,6 +298,7 @@ void Booking::setPaymentTypeFromInput() {
 
             // ask for card details
             cout << endl;
+            cin.ignore(10000, '\n');
             cin.clear();
             cout << "what is your card number in xxxx-xxxx-xxxx-xxxx format? :";
 
@@ -378,28 +379,43 @@ void Booking::displayBookingInformation() {
 
 // the function that will check if a user enters an integer and return the value
 int Booking::checkAndFixError() {
-    float temp;
-    while (!(cin >> temp)){ // check if the type of the input is integer
 
-        cout << "Invalid Input. Please type in only an integer." << endl;
-        cin.clear();
-        cin.ignore(1000, '\n');
-    }
+    string input;
 
-    while (int(temp * 10) % 10  != 0){  // check if it is a float
-        if ( int(temp * 10) % 10  == 0) {
-            return int(temp);
-            break;
+    regex pattern ("\\d+");
+
+    do {
+        getline(cin, input);
+        if (!regex_match(input, pattern)){
+            cout << "Please enter only an integer" << endl;
         }
-        else {
-            cout << "Invalid Input. Please type in only an integer." << endl;
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cin >> temp;
-        }
-    }
+    }while (!regex_match(input, pattern));
 
-    return temp;
+    return stoi(input);
+
+
+//    float temp;
+//    while (!(cin >> temp)){ // check if the type of the input is integer
+//
+//        cout << "Invalid Input. Please type in only an integer." << endl;
+//        cin.clear();
+//        cin.ignore(1000, '\n');
+//    }
+//
+//    while (int(temp * 10) % 10  != 0){  // check if it is a float
+//        if ( int(temp * 10) % 10  == 0) {
+//            return int(temp);
+//            break;
+//        }
+//        else {
+//            cout << "Invalid Input. Please type in only an integer." << endl;
+//            cin.clear();
+//            cin.ignore(1000, '\n');
+//            cin >> temp;
+//        }
+//    }
+//
+//    return temp;
 }
 
 // the function that will ask the user for day choice

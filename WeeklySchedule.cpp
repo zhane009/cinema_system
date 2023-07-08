@@ -168,28 +168,40 @@ void WeeklySchedule::displayMovies() {
 // the function that will check if the user has entered an integer value
 int WeeklySchedule::checkAndFixError() {
 
-    float temp;
-    while (!(cin >> temp)){
+    string input;
 
-        cout << "Invalid Input. Please type in only an integer." << endl;
-        cin.clear();
-        cin.ignore(1000, '\n');
-    }
+    regex pattern ("\\d+");
 
-    while (int(temp * 10) % 10  != 0){
-        if ( int(temp * 10) % 10  == 0) {
-            return int(temp);
-            break;
+    do {
+        getline(cin, input);
+        if (!regex_match(input, pattern)){
+            cout << "Please enter only an integer" << endl;
         }
-        else {
-            cout << "Invalid Input. Please type in only an integer." << endl;
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cin >> temp;
-        }
-    }
+    }while (!regex_match(input, pattern));
 
-    return temp;
+    return stoi(input);
+//    float temp;
+//    while (!(cin >> temp)){
+//
+//        cout << "Invalid Input. Please type in only an integer." << endl;
+//        cin.clear();
+//        cin.ignore(1000, '\n');
+//    }
+//
+//    while (int(temp * 10) % 10  != 0){
+//        if ( int(temp * 10) % 10  == 0) {
+//            return int(temp);
+//            break;
+//        }
+//        else {
+//            cout << "Invalid Input. Please type in only an integer." << endl;
+//            cin.clear();
+//            cin.ignore(1000, '\n');
+//            cin >> temp;
+//        }
+//    }
+//
+//    return temp;
 }
 
 // the function that will calculate the showtimes based on the runtime of the movie and populate the vector
@@ -313,6 +325,8 @@ string WeeklySchedule::editAvailableTimes() {
 
     // change it to a string
     str = to_string(tempHour) + " : " + to_string(tempMinute);
+
+    cout << "The schedule for your chosen day will now start from " << str << endl;
 
     return str; // return that string
 

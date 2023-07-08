@@ -122,27 +122,41 @@ Movie Movie::getInput() {
 
 // the function that will check if the user has entered an integer
 int Movie::checkAndFixError() {
-    float temp;
-    while (!(cin >> temp)){
 
-        cout << "Invalid Input. Please type in only an integer." << endl;
-        cin.clear();
-        cin.ignore(1000, '\n');
-    }
+    string input;
 
-    while (int(temp * 10) % 10  != 0){
-        if ( int(temp * 10) % 10  == 0) {
-            return int(temp);
+    regex pattern ("\\d+");
+
+    do {
+        getline(cin, input);
+        if (!regex_match(input, pattern)){
+            cout << "Please enter only an integer" << endl;
         }
-        else {
-            cout << "Invalid Input. Please type in only an integer." << endl;
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cin >> temp;
-        }
-    }
+    }while (!regex_match(input, pattern));
 
-    return temp;
+    return stoi(input);
+
+//    float temp;
+//    while (!(cin >> temp)){
+//
+//        cout << "Invalid Input. Please type in only an integer." << endl;
+//        cin.clear();
+//        cin.ignore(1000, '\n');
+//    }
+//
+//    while (int(temp * 10) % 10  != 0){
+//        if ( int(temp * 10) % 10  == 0) {
+//            return int(temp);
+//        }
+//        else {
+//            cout << "Invalid Input. Please type in only an integer." << endl;
+//            cin.clear();
+//            cin.ignore(1000, '\n');
+//            cin >> temp;
+//        }
+//    }
+//
+//    return temp;
 }
 
 // the function that will check the date format

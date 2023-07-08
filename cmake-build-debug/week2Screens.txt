@@ -1,5 +1,5 @@
 1,250,1,Standard
 2,200,2,IMAX 2D
 3,200,3,3D
-4,150,5,IMAX 3D
-5,100,4,Premium
+4,150,4,IMAX 3D
+5,100,5,Premium
